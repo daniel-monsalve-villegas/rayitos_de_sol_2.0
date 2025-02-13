@@ -1,13 +1,13 @@
 <template>
   <NavBar />
-   <!-- <LoginClient />
+  <LoginClient />
   <LoginContractor />
   <ClientDashboard />
   <About />
   <Calculator />
-  <Hero /> -->
+  <Hero />
   <ContractorDashboard />
-  <!-- <FooterComponent /> -->
+  <FooterComponent />
 </template>
 
 <script>
