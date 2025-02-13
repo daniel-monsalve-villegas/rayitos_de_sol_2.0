@@ -1,12 +1,13 @@
 <template>
   <NavBar />
+  <ContactUs />
   <LoginClient />
   <LoginContractor />
+  <ContractorDashboard />
   <ClientDashboard />
   <About />
   <Calculator />
   <Hero />
-  <ContractorDashboard />
   <FooterComponent />
 </template>
 
@@ -20,6 +21,8 @@ import ClientDashboard from "./components/client/ClientDashboard.vue";
 import Hero from "./components/home/Hero.vue"; 
 import ContractorDashboard from "./components/contractor/ContractorDashboard.vue";
 import FooterComponent from "./components/home/FooterComponent.vue";
+import ContactUs from "./components/ContactUs.vue";
+
 
 export default {
   name: "App",
@@ -33,6 +36,7 @@ export default {
     Hero,
     ContractorDashboard,
     FooterComponent,
+    ContactUs,
   },
 };
 </script>
