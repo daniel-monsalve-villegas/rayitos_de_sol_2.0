@@ -1,7 +1,7 @@
 <template>
 <div class="contactUs__container"> 
   <div class="contaUs__containerPosition">
-    <div class="cUContainer__right">
+    <div class="cUContainer__left">
       <h2 class="contact__title">Contáctenos</h2>
       <p class="contact__info">Teléfono: +57 123 456 7890</p>
       <p class="contact__info">Correo: contacto@empresa.com</p>
@@ -138,7 +138,7 @@
   margin: 1em;
 }
 
-.cUContainer__right{
+.cUContainer__left{
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -147,6 +147,7 @@
   margin-top: 3em;
 }
 
+/* Contact Us container derecho */
 .contact {
   display: flex;
   justify-content: flex-end;

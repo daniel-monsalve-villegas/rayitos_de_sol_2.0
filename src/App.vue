@@ -1,5 +1,6 @@
 <template>
   <NavBar />
+  <Carousel />
   <ContactUs />
   <LoginClient />
   <LoginContractor />
@@ -22,6 +23,7 @@ import Hero from "./components/home/Hero.vue";
 import ContractorDashboard from "./components/contractor/ContractorDashboard.vue";
 import FooterComponent from "./components/home/FooterComponent.vue";
 import ContactUs from "./components/ContactUs.vue";
+import Carousel from "./components/home/Carousel.vue";
 
 
 export default {
@@ -37,6 +39,7 @@ export default {
     ContractorDashboard,
     FooterComponent,
     ContactUs,
+    Carousel
   },
 };
 </script>
