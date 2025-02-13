@@ -1,45 +1,46 @@
 <template>
   <NavBar />
+  <router-view />
+  <FooterComponent />
+  <!-- <Hero />
   <Carousel />
-  <ContactUs />
-  <LoginClient />
-  <LoginContractor />
-  <ContractorDashboard />
-  <ClientDashboard />
   <About />
   <Calculator />
-  <Hero />
-  <FooterComponent />
+  <ContactUs />
+  <LoginClient />
+  <ClientDashboard />
+  <LoginContractor />
+  <ContractorDashboard /> -->
 </template>
 
 <script>
-import About from "./components/about/About.vue";
-import Calculator from "./components/calculator/Calculator.vue";
-import LoginClient from "./components/client/LoginClient.vue";
-import LoginContractor from "./components/contractor/LoginContractor.vue";
-import NavBar from "./components/home/NavBar.vue"; 
-import ClientDashboard from "./components/client/ClientDashboard.vue";
-import Hero from "./components/home/Hero.vue"; 
-import ContractorDashboard from "./components/contractor/ContractorDashboard.vue";
+import NavBar from "./components/home/NavBar.vue";
 import FooterComponent from "./components/home/FooterComponent.vue";
-import ContactUs from "./components/ContactUs.vue";
-import Carousel from "./components/home/Carousel.vue";
+// import Hero from "./components/home/Hero.vue";
+// import About from "./components/about/About.vue";
+// import Carousel from "./components/home/Carousel.vue";
+// import Calculator from "./components/calculator/Calculator.vue";
+// import ContactUs from "./components/ContactUs.vue";
+// import LoginClient from "./components/client/LoginClient.vue";
+// import LoginContractor from "./components/contractor/LoginContractor.vue";
+// import ClientDashboard from "./components/client/ClientDashboard.vue";
+// import ContractorDashboard from "./components/contractor/ContractorDashboard.vue";
 
 
 export default {
   name: "App",
   components: {
-    About,
     NavBar,
-    LoginClient,
-    LoginContractor,
-    ClientDashboard,
-    Calculator,
-    Hero,
-    ContractorDashboard,
     FooterComponent,
-    ContactUs,
-    Carousel
+    // Hero,
+    // Carousel,
+    // About,
+    // Calculator,
+    // LoginClient,
+    // ClientDashboard,
+    // LoginContractor,
+    // ContractorDashboard,
+    // ContactUs,
   },
 };
 </script>
