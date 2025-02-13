@@ -1,0 +1,21 @@
+@import './base.css';
+
+:root {
+  /* Paleta de colores */
+  --color-dark-green: #123524;
+  --color-green: #3e7b27;
+  --color-light-green: #85a947;
+  --color-cream: #efe3c2;
+
+  /* Colores básicos */
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  /* Colores de texto */
+  --text-color-primary: var(--color-dark-green);
+  --text-color-secondary: var(--color-green);
+
+  /* Colores de fondo */
+  --background-color-primary: var(--color-cream);
+  --background-color-secondary: var(--color-light-green);
+}
