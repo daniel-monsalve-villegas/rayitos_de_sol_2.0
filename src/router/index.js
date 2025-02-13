@@ -1,23 +1,58 @@
-import { createRouter, createWebHistory } from 'vue-router'
-// import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: () => import('../components/home/Hero.vue')
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: () => import('../components/about/About.vue')
+  },
+  {
+    path: '/carousel',
+    name: 'carousel',
+    component: () => import('../components/home/Carousel.vue')
+  },
+  {
+    path: '/calculator',
+    name: 'calculator',
+    component: () => import('../components/calculator/Calculator.vue')
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    component: () => import('../components/ContactUs.vue')
+  },
+  {
+    path: '/login-client',
+    name: 'loginClient',
+    component: () => import('../components/client/LoginClient.vue')
+  },
+  {
+    path: '/client-dashboard',
+    name: 'clientDashboard',
+    component: () => import('../components/client/ClientDashboard.vue')
+  },
+  {
+    path: '/login-contractor',
+    name: 'loginContractor',
+    component: () => import('../components/contractor/LoginContractor.vue')
+  },
+  {
+    path: '/contractor-dashboard',
+    name: 'contractorDashboard',
+    component: () => import('../components/contractor/ContractorDashboard.vue')
+  }
+];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      // path: '/',
-      // name: 'home',
-      // component: HomeView,
-    },
-    {
-      // path: '/about',
-      // name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      // component: () => import('../views/AboutView.vue'),
-    },
-  ],
-})
+  routes
+});
 
-export default router
+console.log("Rutas cargadas:", router.getRoutes());
+
+export default router;
