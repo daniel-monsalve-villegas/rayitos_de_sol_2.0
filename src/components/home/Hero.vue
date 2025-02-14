@@ -4,10 +4,10 @@
   </div>
 </template>
 
-<style scoped> 
+<style scoped>
 .user_container-principal {
   height: 100vh;
   width: 100%;
-  background-color: aqua;
+  background-color: lime;
 }
 </style>
