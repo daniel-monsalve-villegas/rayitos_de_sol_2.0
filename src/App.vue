@@ -10,7 +10,7 @@
   <LoginClient />
   <ClientDashboard />
   <LoginContractor />
-  <ContractorDashboard /> -->
+  <ContractorDashboard />  -->
 </template>
 
 <script>
