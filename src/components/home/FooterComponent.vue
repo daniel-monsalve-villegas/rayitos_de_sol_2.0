@@ -69,7 +69,8 @@
 <style scoped> 
 /* Footer */
 .footer {
-    background-color: #85a947;
+  background-color: #85a947;
+    /* background-color: #85a947; */
     padding: 2rem 0rem 1rem 0rem;
 }
 
