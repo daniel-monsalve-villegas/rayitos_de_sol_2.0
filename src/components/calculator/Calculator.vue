@@ -8,6 +8,6 @@
 .user_container-principal {
   height: 100vh;
   width: 100%;
-  background-color: aqua;
+  background-color: rgb(21, 255, 0);
 }
 </style>
