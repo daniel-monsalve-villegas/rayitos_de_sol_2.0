@@ -47,7 +47,7 @@
 
 .iconsContainer {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   max-width: 70rem;
   justify-content: center;
   margin: 0 auto;
@@ -56,16 +56,17 @@
 
 .iconsContainer_icons {
   display: flex;
-  padding: 2rem;
+  padding: 1rem;
   background-color: var(--color-light-green);
   border-radius: 2rem;
-  margin: 0.7rem 0;
+  margin: 0.7rem 0.5rem;
 }
 
 .icons_img {
   max-width: 5rem;
   max-height: 5rem;
   width: 100%;
+  align-self: center;
 }
 
 .icons_paragraph {
@@ -75,4 +76,5 @@
 .icons-paragraph:last-child {
   line-height: 5rem;
 }
+
 </style>
