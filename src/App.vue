@@ -1,4 +1,5 @@
 <template>
+  <Carousel />
   <NavBar />
   <TestimonialsComponent />
   <HeroComponent />
@@ -27,7 +28,7 @@ import TestimonialsComponent from "./components/home/TestimonialsComponent.vue";
 //import CardComponent from "./components/home/CardComponent.vue";
 // import Hero from "./components/home/Hero.vue";
 // import About from "./components/about/About.vue";
-// import Carousel from "./components/home/Carousel.vue";
+import Carousel from "./components/home/Carousel.vue";
 // import Calculator from "./components/calculator/Calculator.vue";
 // import ContactUs from "./components/ContactUs.vue";
 // import LoginClient from "./components/client/LoginClient.vue";
@@ -50,7 +51,7 @@ export default {
     FeaturesComponent,
     TestimonialsComponent,
     // CardComponent,
-    // Carousel,
+    Carousel,
     // About,
     // Calculator,
     // LoginClient,

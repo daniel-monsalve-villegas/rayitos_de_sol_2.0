@@ -1,8 +1,10 @@
 <script>
 import { ref, onMounted, onUnmounted, nextTick, defineComponent } from 'vue';
-import img1 from '../../assets/img/hamburger.svg';
-import img2 from '../../assets/img/images.jpeg';
-import img3 from '../../assets/img/logo.jpeg';
+import img1 from '../../assets/img/panels/panel1.jpg';
+import img2 from '../../assets/img/panels/panel2.jpg';
+import img3 from '../../assets/img/panels/panel3.jpg';
+import img4 from '../../assets/img/panels/panel4.jpg';
+import img5 from '../../assets/img/panels/panel5.jpg';
 
 export default defineComponent({
   setup() {
@@ -33,8 +35,8 @@ export default defineComponent({
 
     const scrollCarousel = (direction) => {
       if (!carouselRef.value) return;
-      const scrollAmount = direction === 'left' 
-        ? -carouselRef.value.offsetWidth / 3 
+      const scrollAmount = direction === 'left'
+        ? -carouselRef.value.offsetWidth / 3
         : carouselRef.value.offsetWidth / 3;
       carouselRef.value.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     };
@@ -64,7 +66,7 @@ export default defineComponent({
     return {
       carouselRef,
       scrollCarousel,
-      images: [img1, img2, img3, img1, img2, img3],
+      images: [img1, img2, img3, img4, img5, img1, img2, img3, img4, img5, img1, img2],
     };
   },
 });
@@ -109,7 +111,7 @@ export default defineComponent({
   overflow-x: auto;
   scroll-behavior: smooth;
   scrollbar-width: none;
-  user-select: none; 
+  user-select: none;
   cursor: grab;
 }
 .carousel::-webkit-scrollbar {
@@ -117,7 +119,7 @@ export default defineComponent({
 }
 .card {
   flex: 0 0 auto;
-  width: 200px;
+  width: 300px;
   margin: 10px;
   padding: 20px;
   background: white;
@@ -128,6 +130,9 @@ export default defineComponent({
 .card-img img {
   width: 100%;
   border-radius: 10px;
+  max-height: 200px;
+  min-height: 200px;
+
 }
 .div-button-card {
   margin-top: 10px;
