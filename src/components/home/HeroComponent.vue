@@ -92,8 +92,8 @@
 }
 
 .hero__title {
-  font-size: 5rem;
-  margin-top: 40%;
+  font-size: 3rem;
+  margin-top: 30%;
   font-weight: bold;
 
   @media (max-width: 768px) {
@@ -116,16 +116,18 @@
 .hero__calculator-link {
   text-decoration: none;
   display: block;
-  margin-top: 20%;
+  margin-top: 8rem;
   max-height: 40%;
 }
 
 .hero__container-right {
+  position: relative;
+  top: 0%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-background: linear-gradient(135deg,
+  background: linear-gradient(135deg,
       rgba(62, 123, 39, 0.8) 0%,
       rgba(91, 163, 67, 0.5) 40%,
       rgba(32, 63, 15, 0.9) 100%);
@@ -183,6 +185,7 @@ background: linear-gradient(135deg,
   .hero__calculator-link {
     margin-top: 0;
     margin-bottom: 20px;
+
   }
 
   .hero__calculator-svg {
@@ -190,4 +193,93 @@ background: linear-gradient(135deg,
   }
 }
 
+@media (max-width: 425px) {
+
+  .hero__title {
+    margin-top: 50%;
+    font-size: 1.8rem;
+  }
+
+
+  .hero__subtitle {
+    font-size: 1.2rem;
+  }
+
+  .hero__paragraph-container {
+    color: var(--text-color-primary);
+    margin-bottom: 5px;
+    font-size: 1rem;
+  }
+
+  .hero__calculator-link {
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+
+  .hero__calculator-svg {
+    height: 2.5rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .hero__calculator-link {
+    position: relative;
+    top: 23%;
+  }
+
+  @media (min-width: 769px) {
+    .hero__calculator-link {
+      position: relative;
+      top: 23%;
+    }
+  }
+
+  @media (min-width: 2560px) {
+    .hero__title{
+      font-size: 8rem;
+    }
+
+    .hero__subtitle{
+      font-size: 5rem;
+    }
+
+    .hero__paragraph-container{
+      font-size: 3rem;
+    }
+
+    .hero__title-calculator{
+      font-size: 4rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero__text-calculator{
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .hero__title{
+      font-size: 6rem;
+    }
+
+    .hero__subtitle{
+      font-size: 4rem;
+    }
+
+    .hero__paragraph-container{
+      font-size: 2rem;
+    }
+
+    .hero__title-calculator{
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero__text-calculator{
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
 </style>

@@ -74,11 +74,11 @@ export default {
     padding-top: 20px;
     background: var(--color-white);
     padding-bottom: 5%;
-    width: 80%;
+    width: 100%;
     border-radius: 16px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1),
         0px 4px 8px rgba(0, 0, 0, 0.05);
-    margin: 20px auto;
+    margin: 20px 2rem;
 
 }
 
@@ -98,7 +98,7 @@ export default {
 .testimonial {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 0;
     align-items: start;
     text-align: center;
     padding-left: 10%;

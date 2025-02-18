@@ -104,7 +104,8 @@ export default defineComponent({
 }
 .wrapper {
   position: relative;
-  width: 89vw;
+  width: 100%;
+  padding: 2rem;
 }
 .carousel {
   display: flex;

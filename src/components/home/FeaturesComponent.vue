@@ -49,7 +49,7 @@
     align-items: center;
   }
   .features__content{
-    padding: 4rem;
+    padding: 4rem 2rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
