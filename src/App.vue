@@ -18,7 +18,7 @@ import NavBar from "./components/home/NavBar.vue";
 import FooterComponent from "./components/home/FooterComponent.vue";
 // import Hero from "./components/home/Hero.vue";
 // import About from "./components/about/About.vue";
-// import Carousel from "./components/home/Carousel.vue";
+//  import Carousel from "./components/home/Carousel.vue";
 // import Calculator from "./components/calculator/Calculator.vue";
 // import ContactUs from "./components/ContactUs.vue";
 // import LoginClient from "./components/client/LoginClient.vue";
