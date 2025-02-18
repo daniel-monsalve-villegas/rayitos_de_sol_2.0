@@ -1,12 +1,13 @@
 <template>
-  <FeaturesComponent />
   <NavBar />
+  <TestimonialsComponent />
+  <HeroComponent />
+  <FeaturesComponent />
   <LoginClient />
   <LoginContractor />
   <ClientDashboard />
   <About />
   <Calculator />
-  <HeroComponent />
   <ContractorDashboard />
   <FooterComponent />
 </template>
@@ -22,6 +23,7 @@ import ContractorDashboard from "./components/contractor/ContractorDashboard.vue
 import FooterComponent from "./components/home/FooterComponent.vue";
 import HeroComponent from "./components/home/HeroComponent.vue";
 import FeaturesComponent from "./components/home/FeaturesComponent.vue";
+import TestimonialsComponent from "./components/home/TestimonialsComponent.vue";
 //import CardComponent from "./components/home/CardComponent.vue";
 // import Hero from "./components/home/Hero.vue";
 // import About from "./components/about/About.vue";
@@ -46,6 +48,7 @@ export default {
     ContractorDashboard,
     FooterComponent,
     FeaturesComponent,
+    TestimonialsComponent,
     // CardComponent,
     // Carousel,
     // About,
