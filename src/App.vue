@@ -1,7 +1,8 @@
 <template>
   
   <Calculator />
-  <!-- <NavBar class="navbar"/> -->
+  <LoginClient />
+  <LoginContractor />
   <Home />
   <FooterComponent />
 
@@ -9,11 +10,12 @@
 
 <script>
 
-import MaterialsComponent from "./components/calculator/MaterialsComponent.vue";
 import NavBar from "./components/home/NavBar.vue"; 
 import Home from "./components/home/Home.vue"
 import FooterComponent from "./components/home/FooterComponent.vue";
 import Calculator from "./components/calculator/Calculator.vue";
+import LoginClient from "./components/client/LoginClient.vue";
+import LoginContractor from "./components/contractor/LoginContractor.vue";
 
 export default {
   name: "App",
@@ -21,8 +23,9 @@ export default {
     NavBar,
     Home,  
     FooterComponent,
-    MaterialsComponent,
     Calculator,
+    LoginClient,
+    LoginContractor
   },
 };
 </script>

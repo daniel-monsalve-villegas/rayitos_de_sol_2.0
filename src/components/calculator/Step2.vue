@@ -1,84 +1,99 @@
 <template>
   <div class="step2">
-
-    <label for="location">¿En cuál departamento se encuantra el proyecto?</label>
-    <select id="location" v-model="selectedLocation" @change="updateTarifa">
-      <option v-for="location in locations" :key="location.name" :value="location.name">
-        {{ location.name }}
+    <label for="location">¿En cuál departamento se encuentra el proyecto?</label>
+    <select id="location" v-model="localFormData.location" @change="updateLocation">
+      <option v-for="loc in locations" :key="loc.id" :value="loc.id">
+        {{ loc.name }}
       </option>
     </select>
 
     <label for="monthlyConsumption">¿Cuál es el consumo energético al mes? (kWh)</label>
-    <input id="monthlyConsumption" type="number" v-model.number="formData.monthlyConsumption"
-      placeholder="updateTarifa" />
+    <input
+      id="monthlyConsumption"
+      type="number"
+      v-model.number="localFormData.monthlyConsumption"
+      @input="updateMonthlyConsumption"
+      placeholder="Ingresa consumo mensual"
+    />
 
     <div class="tariff">
       <strong>Tarifa: </strong>
-      {{ tariff }}
+      {{ localFormData.tariff }} kWh
     </div>
 
     <div class="bill">
       <strong>Factura de energía de este mes:</strong>
       {{ calcularConsumo }}
     </div>
-
   </div>
 </template>
 
-<script>
-import { ref, computed, watch } from "vue";
+<script setup>
+import { ref, computed, watch, onMounted } from "vue";
+import http from "@/services/http";
 
-export default {
-  props: {
-    formData: {
-      type: Object,
-      required: true
-    }
+
+const props = defineProps({
+  formData: {
+    type: Object,
+    required: true
   },
-  setup(props, { emit }) {
-    // Lista de departamentos con sus tarifas
-    const locations = ref([
-      { name: "Departamento A", tariff: 0.12 },
-      { name: "Departamento B", tariff: 0.15 },
-      { name: "Departamento C", tariff: 0.10 }
-    ]);
+  authHeader: {
+    type: String,
+    required: true
+  }
+});
 
-    // Estado local para el departamento seleccionado
-    const selectedLocation = ref("");
+const localFormData = ref({ ...props.formData });
+const emit = defineEmits(["update:formData", "update:location", "update:tariff", "update:monthlyConsumption"]);
+const locations = ref([]);
 
-    // Tarifa actual según el departamento seleccionado
-    const tariff = ref(0);
 
-    // Actualizar la tarifa al cambiar de departamento
-    const updateTariff = () => {
-      const selected = locations.value.find((d) => d.name === selectedLocation.value);
-      tariff.value = selected ? selected.tariff : 0;
-    };
+watch(
+  () => props.formData,
+  (newValue) => {
+    localFormData.value = { ...newValue };
+  },
+  { deep: true }
+);
 
-    // Calcular el consumo total (tarifa * consumo mensual)
-    const calcularConsumo = computed(() => {
-      return (tariff.value * props.formData.monthlyConsumption).toFixed(2);
+// Obtener locaciones desde la base de datos al cargar el componente
+const fetchLocations = async () => {
+  try {
+    const response = await http.get("http://localhost:8080/api/v1/departments", {
+      headers: {
+        Authorization: props.authHeader
+      }
     });
-
-    // Sincronizar la tarifa en formData para que se envíe al formulario
-    watch(
-      tariff,
-      (newTariff) => {
-        emit("updateTariff", newTariff);
-      },
-      { immediate: true }
-    );
-
-    return {
-      locations,
-      selectedLocation,
-      tariff,
-      updateTariff,
-      calcularConsumo
-    };
+    locations.value = response.data;
+  } catch (error) {
+    console.error("Error en la solicitud", error);
   }
 };
+
+// Actualizar la locación y la tarifa
+const updateLocation = (event) => {
+  const selectedId = event.target.value;
+  const location = locations.value.find(dep => dep.id == selectedId) || {};
+ 
+  localFormData.value.location = selectedId;
+  localFormData.value.tariff = location.kwhValue || 0;
+
+  emit("update:location", selectedId);
+  emit("update:tariff", location.kwhValue || 0);
+};
+
+const updateMonthlyConsumption = () => {
+  emit("update:monthlyConsumption", localFormData.value.monthlyConsumption);
+};
+
+const calcularConsumo = computed(() => {
+  return (localFormData.value.tariff * localFormData.value.monthlyConsumption).toFixed(2);
+});
+
+onMounted(fetchLocations);
 </script>
+
 
 <style scoped>
 .step2 {

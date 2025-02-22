@@ -7,30 +7,83 @@
           *Recuerda que estos valores son estimaciones a partir de los datos seleccionados.
         </small>
       </div>
-  
+      
       <div class="step5__card step5__savings">
         <div class="step5__savings-icon">💰</div>
-        <h2>$732.888* <span>$COP</span></h2>
+        <h2>{{ formatCompactNumber(formData.quotation.monthlySavings) }} <span>$COP</span></h2>
         <p>Ahorro estimado al mes en factura</p>
       </div>
-  
-      <div class="step5__card step5__contact">
-        <p><strong>William Guzmán</strong></p>
-        <p>Team Rayitos de Sol</p>
-        <div class="step5__contact-info">
-          <span>📧 wguzman@rayitos.sol</span>
-          <span>📞 16659652</span>
-        </div>
+      
+      <div class="step5__card step5__savings">
+        <div class="step5__savings-icon">🔋</div>
+        <h2>{{ formatCompactNumber(formData.quotation.energyGeneration) }} <span>kWh/mes</span></h2>
+        <p>Produccion de energía</p>
+      </div>
+
+      <div class="step5__card step5__savings">
+        <div class="step5__savings-icon">⚡</div>
+        <h2>{{ formatCompactNumber(formData.quotation.systemPower) }} <span>kWp</span></h2>
+        <p>Potencia del sistema</p>
+      </div>
+
+      <div class="step5__card step5__savings">
+        <div class="step5__savings-icon">💲</div>
+        <h2>{{ formatCompactNumber(formData.quotation.projectCost) }} <span>$COP</span></h2>
+        <p>Costo total del proyecto</p>
+      </div>
+
+      <!-- Datos del contratista -->
+    <div class="step5__card step5__contact">
+      <p><strong>{{ contractor?.nameContractor || "Cargando..." }}</strong></p>
+      <p>Team Rayitos de Sol</p>
+      <div class="step5__contact-info">
+        <span>📧 {{ contractor?.emailContractor || "Cargando..." }}</span>
+        <span>📞 {{ contractor?.phoneContractor || "Cargando..." }}</span>
       </div>
     </div>
+    </div>
   </template>
+  <script setup>
+  import { ref, onMounted } from "vue";
+  import http from "@/services/http";
   
-  <script>
-  export default {
-    name: "Step5",
+  const props = defineProps({
+    formData: {
+      type: Object,
+      required: true,
+    },
+    authHeader: {
+      type: String,
+      required: true,
+    }
+  });
+  
+  const contractor = ref({ });
+  
+  const fetchContractor = async () => {
+    try {
+      const response = await http.get("http://localhost:8080/api/v1/contractor/1", {
+        headers: {
+          Authorization: props.authHeader
+        }
+      });
+  
+      contractor.value = response.data;
+    
+    } catch (error) {
+      console.error("Error al obtener datos del contratista:", error);
+    }
   };
+  
+  // Función para formatear números con separadores de miles
+  const formatCompactNumber = (value) => {
+    return new Intl.NumberFormat("es-CO").format(value);
+  };
+  
+  onMounted(fetchContractor);
   </script>
   
+
   <style scoped>
   .step5 {
     display: flex;
@@ -59,11 +112,14 @@
   .step5__welcome p {
     font-size: 1.25rem;
   }
+
   
   .step5__savings h2 {
     font-size: 2rem;
     color: #69c17d;
     margin-bottom: 0.5rem;
+    word-break: break-word;
+
   }
   
   .step5__savings-icon {
@@ -75,7 +131,7 @@
     flex-direction: column;
     gap: 0.5rem;
     margin-top: 1rem;
-  }
+    word-wrap: break-word; }
   
   .step5__contact-info span {
     background-color: #dfead9;
