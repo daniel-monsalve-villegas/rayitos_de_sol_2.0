@@ -45,7 +45,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   background-color: var(--color-dark-green);
-  padding: 10px 20px;
+  padding: 10px 2rem;
   height: 7em;
   max-width: 100%;
   box-sizing: border-box;
@@ -76,15 +76,26 @@ export default {
 .navbar__link {
   text-decoration: none;
   color: var(--color-cream);
-  padding: 8px 0;
+  padding: 8px 8px;
   border-radius: 25px;
   font-size: 1em;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.navbar__link:hover {
-  background-color: var(--color-light-green);
-  color: var(--color-dark-green);
+
+
+
+.navbar__link::after{
+  content: "";
+  height: 4px;
+  width: 0;
+  background-color: var(--color-cream);
+  display: block;
+  transition: all 300ms;
+}
+
+.navbar__link:hover::after{
+  width: 100%;
 }
 
 .navbar__link--login {

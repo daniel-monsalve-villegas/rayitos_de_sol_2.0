@@ -75,10 +75,8 @@
 }
 
 .container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
+    width: 100%;
+    padding: 0 2rem;
 }
 
 /* Grid Layout */
@@ -125,6 +123,7 @@
     font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 0.75rem;
+    align-self: start;
 }
 
 .footer-text {
@@ -141,7 +140,7 @@
 
 .social-links {
     display: flex;
-
+    justify-content: flex-start;
     gap: 1rem;
 }
 

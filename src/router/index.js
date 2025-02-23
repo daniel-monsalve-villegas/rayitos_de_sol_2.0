@@ -1,11 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: () => import('../components/home/Hero.vue')
-  },
+  
   {
     path: '/about',
     name: 'about',
