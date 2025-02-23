@@ -24,8 +24,8 @@
 
 <style scoped>
 .user_container-principal {
-  margin-top: 7em;
-  height: 100vh;
+  margin-top: 5em;
+  height: auto;
   width: 100%;
   background-color: #EFE3C2;
   display: flex;

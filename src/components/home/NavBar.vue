@@ -3,7 +3,7 @@
     <!-- Logo -->
     <div class="navbar__logo">
       <img src="../../assets/img/logo.png" alt="Logo">
-    </div>
+    </div>
 
     <!-- Checkbox para el menú hamburguesa -->
     <input type="checkbox" id="navbar-toggle-menu" class="navbar__checkbox">
@@ -45,8 +45,8 @@ export default {
   align-items: center;
   justify-content: space-between;
   background-color: var(--color-dark-green);
-  padding: 10px 2rem;
-  height: 7em;
+  padding: 0 2rem;
+  height: 5em;
   max-width: 100%;
   box-sizing: border-box;
   border-bottom: 3px solid var(--color-light-green);
