@@ -137,11 +137,11 @@
   font-size: 24px; 
   font-weight: bold; /* Hace el texto más grueso */
   color: #ffffff; 
-  border: 2px solid #ffffff; 
+  border: 1.5px solid #ffffff; 
   padding: 10px 20px; /* Espaciado interno */
   display: inline-block; 
   border-radius: 8px;
-  background-color: #339b07;
+  background-color: var(--color-dark-green);
 }
 
 /* Contenedor Superior */
