@@ -32,7 +32,6 @@
 }
 
 .image {
-  display: block;
   max-width: 40rem;
   max-height: 35rem;
   margin: 1rem 0 0 5rem;
