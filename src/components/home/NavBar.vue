@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos iguales a los que ya tenías */
+
 .navbar {
   display: flex;
   align-items: center;
@@ -129,11 +129,9 @@ export default {
   width: 30px;
 }
 
-/* Responsive para móviles */
 @media (max-width: 768px) {
   .navbar {
-    /* height: 5.2em; */
-    height: 7em;
+    height: 5em;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -145,11 +143,15 @@ export default {
     font-size: 1em;
   }
 
+  /* por terminar */
   .navbar__link--login {
     position: absolute;
     display: block;
+    margin: 0 auto;
     left: 50%;
     transform: translateX(-50%);
+    width: 10rem;
+    background-color: blue;
   }
 
   .navbar__label {
