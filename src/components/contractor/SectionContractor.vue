@@ -91,7 +91,14 @@
 </template>
 
 <script>
+  import dataContractor from '../../assets/contractor.json'
+  console.log(contractor)
 export default {
+  data() {
+    return {
+      contractor: dataContractor,
+    }
+  }
 }
 </script>
 
@@ -106,14 +113,16 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(4, 4, 4);
+  background-color: var(--color-light-cream);
 }
 .container-seccion3 {
   max-width: 1120px;
+  max-height: 800px;
   width: 100%;
   background-color: rgb(215, 214, 214);
   padding: 40px;
   border-radius: 10px;
+  margin-top: 8rem;
 }
 .seccion3-content {
   margin: 0 40px;
@@ -125,6 +134,7 @@ export default {
 }  */
 .card {
   width: 320px;
+  height:300px;
   border-radius: 25px;
   background-color: #FFF;
 }
