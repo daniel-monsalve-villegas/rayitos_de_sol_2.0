@@ -32,7 +32,7 @@
 }
 
 .image {
-  max-width: 40rem;
+  max-width: 41rem;
   max-height: 35rem;
   margin: 1rem 0 0 5rem;
   width: 100%;
