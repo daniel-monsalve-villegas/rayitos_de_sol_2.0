@@ -1,0 +1,32 @@
+contratistas = {
+{
+  "id": 1,
+"contratista": "Contratista 1",
+  "review": "contratista de paneles solares que se especializa en la instalación, mantenimiento y reparación de sistemas fotovoltaicos, brindando soluciones energéticas eficientes y sostenibles para viviendas, empresas y comunidades"
+},
+{
+  "id": 2,
+"contratista": "Contratista 2",
+  "review": "contratista de paneles solares que se especializa en la instalación, mantenimiento y reparación de sistemas fotovoltaicos, brindando soluciones energéticas eficientes y sostenibles para viviendas, empresas y comunidades"
+},
+{
+  "id": 3,
+"contratista": "Contratista 3",
+  "review": "contratista de paneles solares que se especializa en la instalación, mantenimiento y reparación de sistemas fotovoltaicos, brindando soluciones energéticas eficientes y sostenibles para viviendas, empresas y comunidades"
+},
+{
+  "id": 4,
+"contratista": "Contratista 4",
+  "review": "contratista de paneles solares que se especializa en la instalación, mantenimiento y reparación de sistemas fotovoltaicos, brindando soluciones energéticas eficientes y sostenibles para viviendas, empresas y comunidades"
+},
+{
+  "id": 5,
+"contratista": "Contratista 5",
+  "review": "contratista de paneles solares que se especializa en la instalación, mantenimiento y reparación de sistemas fotovoltaicos, brindando soluciones energéticas eficientes y sostenibles para viviendas, empresas y comunidades"
+},
+{
+  "id": 6,
+"contratista": "Contratista 6",
+  "review": "contratista de paneles solares que se especializa en la instalación, mantenimiento y reparación de sistemas fotovoltaicos, brindando soluciones energéticas eficientes y sostenibles para viviendas, empresas y comunidades"
+},
+}
