@@ -40,7 +40,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--color-light-cream);
+  background-color: var(--color-cream);
 }
 .container-seccion3 {
   max-width: 1120px;
