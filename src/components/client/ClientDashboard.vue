@@ -112,17 +112,17 @@
   width: 100%;
   background-color: var(--color-cream);
   padding: 2rem 2rem;
-  background-image: url('../../assets/img/pexels_evo1.jpg'); /* Reemplaza con la ruta de tu imagen */
-  background-size: cover; /* Ajusta la imagen para que cubra todo el contenedor */
-  background-position: center; /* Centra la imagen */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  /* background-image: url('../../assets/img/pexels_evo1.jpg'); 
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;  */
   display: flex;
   justify-content: center; /* Centra horizontalmente */
 }
 
 .stats-card {
   max-width: 85rem;
-  background-color: rgba(63, 99, 1, 0.584); /* Verde con opacidad */
+  background-color: var(--color-light-green);
   backdrop-filter: blur(2px);
   border-radius: 1.5rem;
   padding: 2rem;
@@ -134,14 +134,14 @@
 
 .cliente_title_principal {
   text-align: center;
-  font-size: 24px; /* Tamaño del texto */
+  font-size: 24px; 
   font-weight: bold; /* Hace el texto más grueso */
-  color: #ffffff; /* Color del texto */
-  border: 2px solid #ffffff; /* Borde alrededor del texto */
+  color: #ffffff; 
+  border: 2px solid #ffffff; 
   padding: 10px 20px; /* Espaciado interno */
-  display: inline-block; /* Evita que el borde ocupe todo el ancho */
-  border-radius: 8px; /* Bordes redondeados (opcional) */
-  background-color: rgba(239, 227, 194, 0.5);
+  display: inline-block; 
+  border-radius: 8px;
+  background-color: #339b07;
 }
 
 /* Contenedor Superior */
@@ -186,14 +186,14 @@
 .cliente_buton {
   padding: 7px 11px;
   border: none;
-  background-color: #007bff;
+  background-color: #339b07;
   color: white;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .cliente_buton:hover {
-  background-color: #0056b3;
+  background-color: #2a8606;
 }
 
 .client_container_actualizar {
