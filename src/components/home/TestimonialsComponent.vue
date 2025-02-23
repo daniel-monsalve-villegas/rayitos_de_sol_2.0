@@ -66,20 +66,20 @@ export default {
 <style scoped>
 .container {
     display: flex;
+    justify-content: center;
     background-color: var(--color-cream);
 }
 
 .section-testimonial {
     text-align: center;
-    padding-top: 20px;
+    padding-top: 50px;
     background: var(--color-white);
     padding-bottom: 5%;
-    width: 100%;
-    border-radius: 16px;
+    width: 80%;
+    border-radius: 7%;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1),
         0px 4px 8px rgba(0, 0, 0, 0.05);
     margin: 20px 2rem;
-
 }
 
 .title {
@@ -89,10 +89,12 @@ export default {
     line-height: 2rem;
     display: inline-block;
     text-align: center;
-    padding: 15px;
+    padding: 1.8em;
     margin-top: 5%;
     margin-bottom: 10%;
-    border: 5px var(--color-dark-green) solid;
+    border: 1px var(--color-dark-green) solid;
+    width: 80%;
+    border-radius:3em 0 3em;
 }
 
 .testimonial {
@@ -114,5 +116,33 @@ export default {
     .testimonial__author:nth-child(3) {
         margin-top: 0;
     }
+
+    .section-testimonial {
+    border-radius: 30px;
+
+    
+}
+}
+
+@media (max-width: 426px) {
+  .section-testimonial {
+    padding: 0;
+    padding-bottom: 1rem;
+    /* background-color: blue; */
+    width: auto;
+    margin: 1rem 2rem;
+    border-radius: 10px;
+}
+
+  .title {
+    padding: 0.7em;
+    background: none;
+    border-radius: 0; 
+  }
+
+  .testimonial {
+  padding: 0 8% ;
+  }
+
 }
 </style>

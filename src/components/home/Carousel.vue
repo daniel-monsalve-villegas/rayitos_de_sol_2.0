@@ -98,6 +98,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 5em;
   width: 100%;
   overflow: hidden;
   background-color: var(--color-cream);
@@ -164,5 +165,10 @@ export default defineComponent({
 }
 #right {
   right: -40px;
+}
+@media (max-width: 426px) {
+  .section-carrusel {
+  padding: 5rem 0;
+  }
 }
 </style>

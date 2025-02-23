@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import Carousel from './Carousel.vue';
 import FeaturesComponent from './FeaturesComponent.vue';
 import HeroComponent from './HeroComponent.vue';
@@ -8,7 +8,7 @@ import TestimonialsComponent from './TestimonialsComponent.vue';
 
 <template>
     <HeroComponent />
-    <Carousel />
     <FeaturesComponent />
+    <Carousel />
     <TestimonialsComponent />
 </template>

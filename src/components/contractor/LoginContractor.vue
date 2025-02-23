@@ -6,7 +6,8 @@
     <!-- Button from Uiverse.io by 00Kubi -->
     <label class="theme-switch">
       <p class="theme-switch__paragraph">Ir al panel de contratista&nbsp;&nbsp;&nbsp;</p>
-      <input class="theme-switch__checkbox" type="checkbox" v-model="isClient" @change="toggleLogin" />
+      <input class="theme-switch__checkbox" type="checkbox" 
+      v-model="isClient" @change="toggleLogin" />
       <div class="theme-switch__container">
         <div class="theme-switch__clouds"></div>
         <div class="theme-switch__stars-container">
@@ -87,7 +88,9 @@
     <input class="login__submit" type="submit" value="Login" />
 
     <div class="container__registerAndRecovery">
-      <p class="paragraph__recoveryPass__left">¿Ha olvidado su contraseña? </p><p class="paragraph__recoveryPass__right"> Registrarse</p>
+      <p class="paragraph__recoveryPass__left">¿Ha olvidado su contraseña? </p>
+      <input class="button__recoveryPass" value="Registrarse"  
+      type="button" @click="toggleRegister" /> 
     </div>
   </form>
 </div>
@@ -124,7 +127,13 @@ export default defineComponent({
     const isClient = ref(false);
 
     const toggleLogin = () => {
-      router.push('/login-client');
+    setTimeout(() => {
+        router.push('/login-client');
+      }, 800);
+    };
+
+    const toggleRegister = () => {
+      router.push('/register-contractor'); 
     };
 
 
@@ -137,6 +146,7 @@ export default defineComponent({
       submitForm,
       isClient,
       toggleLogin,
+      toggleRegister,
     };
   },
 });
@@ -149,11 +159,21 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  margin-top: 5.5em;
   padding: 0;
   border: 0;
   background-color: var(--color-cream);
   height: 90vh;
   width: auto;
+}
+
+.theme-switch__paragraph{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  color: var(--color-dark-green);
+  font-weight: bold;
 }
 
 .login__form {
@@ -262,6 +282,27 @@ export default defineComponent({
 .paragraph__recoveryPass__right:hover{
   color: var(--color-light-green);
   font-weight: bold;
+}
+
+.button__recoveryPass {
+  background: none;
+  border: none; 
+  margin: 0; 
+  padding: 0;
+  padding-bottom: 0.3em; 
+  padding-right: 0.3em; 
+  color: var(--color-green);
+  font-size: 0.8em;
+  font-weight: bold;
+  font-family: inherit; 
+  text-decoration: none;
+  cursor: pointer; 
+  width: 50%;
+}
+
+.button__recoveryPass:hover {
+  color: var(--color-light-green);
+  text-decoration: none; 
 }
 
 

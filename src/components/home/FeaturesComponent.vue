@@ -49,8 +49,8 @@
     align-items: center;
   }
   .features__content{
-    padding: 4rem 2rem;
     display: flex;
+    padding: 4rem 2rem;
     flex-direction: column;
     gap: 1rem;
     background-color: var(--background-color-secondary);
@@ -59,6 +59,7 @@
     width: 100%;
     align-items: center;
     text-align: center;
+    padding: 8em;
   }
 
   .features__title{
@@ -83,6 +84,7 @@
     display: flex;
     justify-content: space-between;
     flex-direction: row;
+    padding: 5em;
     gap: 2rem;
     margin: 20px;
     align-items: stretch;
@@ -90,18 +92,26 @@
     
   }
 
- .card{
+.card{
     flex: 1;
     background-color: var(--background-color-primary);
     max-width: 400px;
- }
+}
 
- @media (max-width: 768px){
+@media (max-width: 768px){
     .card-gallery{
         flex-direction: column;
         gap: 2rem;
         align-items: center;
     }
- }
+}
 
+@media (max-width: 426px) {
+  .card-gallery{
+    padding: 1rem 2rem;
+  }
+  .features__content{ 
+    padding: 2rem 3rem;
+  }
+}
   </style>

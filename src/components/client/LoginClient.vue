@@ -59,7 +59,8 @@
     <input class="login__submit" type="submit" value="Login" />
 
     <div class="container__registerAndRecovery">
-      <p class="paragraph__recoveryPass__left">¿Ha olvidado su contraseña? </p><p class="paragraph__recoveryPass__right"> Registrarse</p>
+      <p class="paragraph__recoveryPass__left">¿Ha olvidado su contraseña? </p>
+      <input type="button" value="Registrarse" class="button__recoveryPassClient" @click="toggleRegister" />
     </div>
   </form>
 </div>
@@ -93,7 +94,13 @@ export default defineComponent({
     const isContractor = ref(false);
 
     const toggleLogin = () => {
-      router.push('/login-contractor');
+    setTimeout(() => {
+        router.push('/login-contractor');
+      }, 800);
+    };
+
+    const toggleRegister = () => {
+      router.push('/register-client'); 
     };
 
     return {
@@ -103,7 +110,8 @@ export default defineComponent({
       togglePassword,
       submitForm,
       isContractor,
-      toggleLogin
+      toggleLogin,
+      toggleRegister
     };
   },
 });
@@ -117,6 +125,7 @@ export default defineComponent({
   align-items: center;
   box-sizing: border-box;
   padding: 0;
+  margin-top: 6.5em;
   border: 0;
   background-color: var(--color-cream);
   height: 80vh;
@@ -229,6 +238,27 @@ export default defineComponent({
   font-weight: bold;
 }
 
+.button__recoveryPassClient {
+  background: none;
+  border: none; 
+  margin: 0; 
+  padding: 0;
+  padding-bottom: 0.3em; 
+  padding-right: 0.3em; 
+  color: var(--color-green);
+  font-size: 0.8em;
+  font-weight: bold;
+  font-family: inherit; 
+  text-decoration: none;
+  cursor: pointer; 
+  width: 50%;
+}
+
+.button__recoveryPass:hover {
+  color: var(--color-light-green);
+  text-decoration: none; 
+}
+
 
 .theme-switch__paragraph{
   display: flex;
@@ -239,7 +269,10 @@ export default defineComponent({
   font-weight: bold;
 }
 
-/* Button css from Uiverse.io by 00Kubi */
+
+
+
+/* Button css from Uiverse.io by 00Kubi el de la luna*/
 .theme-switch {
   display: flex;
   justify-content: flex-end;

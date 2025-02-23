@@ -1,7 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
-  
+  {
+    path: '/',
+    name: 'home',
+    component: () => import('../components/home/Home.vue')
+  },
   {
     path: '/about',
     name: 'about',
@@ -23,6 +27,11 @@ const routes = [
     component: () => import('../components/ContactUs.vue')
   },
   {
+    path: '/register-client',
+    name: 'registerClient',
+    component: () => import('../components/client/RegisterClient.vue')
+  },
+  {
     path: '/login-client',
     name: 'loginClient',
     component: () => import('../components/client/LoginClient.vue')
@@ -31,6 +40,11 @@ const routes = [
     path: '/client-dashboard',
     name: 'clientDashboard',
     component: () => import('../components/client/ClientDashboard.vue')
+  },
+  {
+    path: '/register-contractor',
+    name: 'registerContractor',
+    component: () => import('../components/contractor/RegisterContractor.vue')
   },
   {
     path: '/login-contractor',

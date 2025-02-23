@@ -49,7 +49,7 @@ const pothoPath = computed(() => {
 }
 
 .testimonial__author-info{
-    border: 5px var(--color-green) solid;
+    border: 3px var(--color-green) solid;
     background-color: var(--color-light-green);
 }
 
@@ -74,8 +74,13 @@ const pothoPath = computed(() => {
 }
 
 .testimonial__author:nth-child(2) > .testimonial__author-info, .testimonial__author:nth-child(3) > .testimonial__author-info{
-    border: 5px var(--color-dark-green) solid;
+    border: 3px var(--color-dark-green) solid;
 }
 
+@media (max-width: 426px) {
+  .testimonial__author{
+    width: 100%;  
+  }
+}
 
 </style>

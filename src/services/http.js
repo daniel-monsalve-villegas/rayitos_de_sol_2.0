@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 const http = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: "http://localhost:5174",
     timeout: 1000,
     headers: {
-        "Content-type": "application/json",
+        "Content-type": "application/json", 
     },
 });
 
