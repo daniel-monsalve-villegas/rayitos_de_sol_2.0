@@ -1,41 +1,45 @@
 <template>
+<div class="calculator_container">
   <div class="form">
-    <div v-if="currentStep === 1">
-      <Step1 :formData="formData" @updateOption="updateOption" />
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-    </div>
+    <div class="container_calculatorForm">
+      <div v-if="currentStep === 1">
+        <Step1 :formData="formData" @updateOption="updateOption" />
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      </div>
 
-    <div v-if="currentStep === 2">
-      <Step2
-        v-model:formData="formData"
-        v-model:location="formData.location"
-        v-model:tariff="formData.tariff"
-        v-model:monthlyConsumption="formData.monthlyConsumption"
-        :authHeader="authHeader"
-      />
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-    </div>
+      <div v-if="currentStep === 2">
+        <Step2
+          v-model:formData="formData"
+          v-model:location="formData.location"
+          v-model:tariff="formData.tariff"
+          v-model:monthlyConsumption="formData.monthlyConsumption"
+          :authHeader="authHeader"
+        />
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      </div>
 
-    <div v-if="currentStep === 3">
-      <Step3 :formData="formData" />
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-    </div>
+      <div v-if="currentStep === 3">
+        <Step3 :formData="formData" />
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      </div>
 
-    <div v-if="currentStep === 4">
-      <Step4 :formData="formData" />
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-    </div>
+      <div v-if="currentStep === 4">
+        <Step4 :formData="formData" />
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      </div>
 
-    <div v-if="currentStep === 5">
-      <Step5 :formData="formData" :auth-header="authHeader" />
-    </div>
+      <div v-if="currentStep === 5">
+        <Step5 :formData="formData" :auth-header="authHeader" />
+      </div>
 
-    <div class="form__navigation-buttons">
-      <button v-if="currentStep > 1 && currentStep <= 4" @click="goToPreviousStep">Anterior</button>
-      <button v-if="currentStep < 4" @click="validateAndGoToNextStep">Siguiente</button>
-      <button v-if="currentStep === 4" @click="submitForm">Enviar</button>
-    </div>
+      <div class="form__navigation-buttons">
+        <button v-if="currentStep > 1 && currentStep <= 4" @click="goToPreviousStep">Anterior</button>
+        <button v-if="currentStep < 4" @click="validateAndGoToNextStep">Siguiente</button>
+        <button v-if="currentStep === 4" @click="submitForm">Enviar</button>
+      </div>
   </div>
+  </div>
+</div>
 </template>
 
 <script setup>
@@ -129,18 +133,43 @@ const submitForm = () => {
     .catch((error) => {
       errorMessage.value = 'Hubo un error al enviar el formulario. Inténtalo de nuevo.'
     })
-}
+  }
 
-// Actualizar tipo de proyecto en Step1
-const updateOption = (option) => {
-  formData.projectType = option
-}
+  // Actualizar tipo de proyecto en Step1
+  const updateOption = (option) => {
+    formData.projectType = option
+  }
 </script>
 
 <style scoped>
-.form {
-  margin: 20px auto;
-  width: 500px;
+    .calculator_container{
+      display: flex;
+      justify-content: center;
+      margin-top: 7em;
+      background-color: var(--color-cream);
+    }
+
+  .form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    margin: 1.5em;
+    padding:2em;
+    min-height: 35em;
+    width: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+
+  }
+
+  .container_calculatorForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 3em;
+    border-radius: 10%;
 }
 
 .form__navigation-buttons {
