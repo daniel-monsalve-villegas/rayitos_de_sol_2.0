@@ -2,8 +2,8 @@
   <nav class="navbar">
     <!-- Logo -->
     <div class="navbar__logo">
-      <img src="../../../public/favicon20.png" alt="Logo">
-    </div>
+      <img src="../../assets/img/logo.png" alt="Logo">
+    </div>
 
     <!-- Checkbox para el menú hamburguesa -->
     <input type="checkbox" id="navbar-toggle-menu" class="navbar__checkbox">
@@ -54,15 +54,14 @@ export default {
 }
 
 .navbar__logo img {
-  height: 4rem;
-  border-radius: 50%;
-  object-fit: cover;
+  height: 3.5rem;
 }
 
 
 .navbar__menu {
   display: flex;
   justify-content: center;
+  align-items: center;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -71,6 +70,8 @@ export default {
 }
 
 .navbar__item {
+  display: flex;
+  align-items: center;
   white-space: nowrap;
 }
 
