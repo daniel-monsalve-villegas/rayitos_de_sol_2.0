@@ -122,6 +122,7 @@
 }
 
 .contactUs__container{
+  margin-top: 7em;
   display: flex;
   justify-content: center;
   align-items: center;
