@@ -159,7 +159,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  margin-top: 5.5em;
+  margin-top: 5em;
   padding: 0;
   border: 0;
   background-color: var(--color-cream);

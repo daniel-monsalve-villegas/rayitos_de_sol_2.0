@@ -321,7 +321,7 @@
   }
 }
 
-@media (max-width: 426px) {
+@media (max-width: 689px) {
   .contaUs__containerPosition{
     display: flex;
     flex-direction: column;
@@ -354,7 +354,7 @@
   
 }
 
-@media (min-width: 426px) and (max-width: 1023px) {
+@media (min-width: 690px) and (max-width: 1023px) {
   .contenedores_redes_contactanos{
     display: flex;
     flex-direction: column;
