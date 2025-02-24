@@ -106,7 +106,7 @@
 }
 
 .client_container-principal {
-  margin-top: 7em;
+  margin-top: 5em;
   height: auto;
   min-height: 100vh;
   width: 100%;
