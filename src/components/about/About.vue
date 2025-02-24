@@ -173,5 +173,10 @@
   .item5_container_grip img {
     margin: 0.5rem 0;
   }
+
+  .item3_container_grip img,
+  .item4_container_grip img {
+    margin-bottom: 0.8rem;
+  }
 }  
 </style>

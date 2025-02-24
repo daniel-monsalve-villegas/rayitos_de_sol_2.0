@@ -150,8 +150,9 @@ export default {
     margin: 0 auto;
     left: 50%;
     transform: translateX(-50%);
-    width: 10rem;
-    background-color: blue;
+    width: 5.5rem;
+    background-color: var(--color-green);
+    margin-left: 0.9rem;
   }
 
   .navbar__label {

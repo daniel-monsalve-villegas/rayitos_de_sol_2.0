@@ -8,7 +8,9 @@
             
       <div class="contact__social">
         <h3 class="contact__social-title">Síguenos en:</h3>
+
         <ul class="socail-media">
+          <div class="contenedores_redes_contactanos">
           <li>
             <a href="#">
               <svg viewBox="0 0 10.712 20" height="20" width="10.712" xmlns="http://www.w3.org/2000/svg">
@@ -40,7 +42,9 @@
 
             </a>
           </li>
+        </div>
 
+        <div class="contenedores_redes_contactanos">
           <li>
             <a href="#">
               <svg viewBox="0 0 20 20" height="20" width="20" xmlns="http://www.w3.org/2000/svg" id="_x31_0.Linkedin">
@@ -66,7 +70,9 @@
 
             </a>
           </li>
+          </div>
 
+          <div class="contenedores_redes_contactanos">
           <li>
             <a href="#">
               <svg viewBox="0 0 19.738 22.466" height="22.466" width="19.738" xmlns="http://www.w3.org/2000/svg" data-name="Group 101" id="Group_101">
@@ -85,6 +91,7 @@
 
             </a>
           </li>
+          </div>
         </ul>
       </div>
     </div>
@@ -122,7 +129,7 @@
 }
 
 .contactUs__container{
-  margin-top: 7em;
+  margin-top: 5em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -134,6 +141,7 @@
   display: flex;
   justify-content: space-between;
   background: var(--background-color-secondary);
+  max-width: 64rem;
   width: 80%;
   border-radius: 10px;
   margin: 1em;
@@ -143,7 +151,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 3rem;
+  padding: 3rem 3rem 0 3rem;
   margin-left: 1em;
   margin-top: 3em;
 }
@@ -227,11 +235,17 @@
   display: flex;
   align-items: center;
   align-content: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 20px;
   list-style: none;
 }
 
+.contenedores_redes_contactanos{
+  display: flex; 
+  justify-content: space-between;
+  width: 100%;
+  gap: 1.2rem;
+}
 .socail-media li a {
   width: 50px;
   height: 50px;
@@ -304,6 +318,54 @@
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@media (max-width: 426px) {
+  .contaUs__containerPosition{
+    display: flex;
+    flex-direction: column;
+  }  
+  .contact {
+    /* display: flex; */
+    margin: 2rem 1rem;
+    width: auto;
+  }
+  .cUContainer__left {
+    margin: 0;
+    padding: 2rem 1.5rem;
+  }
+  .socail-media {
+    flex-direction: column; /* Cambia la dirección a vertical */
+    align-items: center; /* Centra los botones */
+    gap: 15px; 
+  }
+
+  .contenedores_redes_contactanos{
+    display: flex; 
+    justify-content: space-around; /* Centra los elementos horizontalmente */
+    align-items: center; 
+    gap: 10px; 
+  }
+
+  .contaUs__containerPosition {
+    margin: 1rem 0;
+  }
+  
+}
+
+@media (min-width: 426px) and (max-width: 1023px) {
+  .contenedores_redes_contactanos{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .socail-media {
+    gap: 0rem;
+  }
+  .cUContainer__left {
+    margin-top: 1rem;
+    padding-top: 1rem;
   }
 }
 </style>
