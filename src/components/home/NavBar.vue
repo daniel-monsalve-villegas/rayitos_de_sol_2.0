@@ -163,7 +163,7 @@ export default {
     position: absolute;
     background: var(--color-dark-green);
     width: 100%;
-    top: 5.21em;
+    top: 5em;
     left: 0;
     display: none;
     flex-direction: column;

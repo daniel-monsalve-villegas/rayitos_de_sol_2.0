@@ -125,7 +125,7 @@ export default defineComponent({
   align-items: center;
   box-sizing: border-box;
   padding: 0;
-  margin-top: 6.5em;
+  margin-top: 5em;
   border: 0;
   background-color: var(--color-cream);
   height: 80vh;

@@ -52,13 +52,12 @@
 }
 
 .image_about_principal {
-  max-width: 40rem;
-.image {
   max-width: 41rem;
   max-height: 35rem;
   width: 90%;
   height: auto;
 }
+
 
 .item2_container_grip {
   display: flex;
