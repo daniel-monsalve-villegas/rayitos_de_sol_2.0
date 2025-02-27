@@ -43,6 +43,7 @@
 <style scoped> 
 /* Contenedor principal crema */
 .contractorDasboard__container{
+  margin-top: 5em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -111,7 +112,9 @@
   height: 100%;
   width: auto;
   border-radius: 50%;
-  margin-bottom: 2em;
+  max-height: 100%; 
+  max-width: 100%; 
+  margin-bottom: 2rem;
 }
 
 /* Información contactor  */
@@ -144,5 +147,15 @@
 
 li{
   padding: 0.3em;
+}
+
+@media screen and (max-width: 650px) {
+  .avatar {
+    width: auto;
+    height: 70%;
+  }
+  .contactorInfo__Ul {
+    padding: 1rem;
+  }
 }
 </style>
