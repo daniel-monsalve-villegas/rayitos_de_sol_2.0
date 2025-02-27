@@ -92,76 +92,100 @@
     }
 }
 
+
 /* Brand Section */
 .footer-brand {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 /* .brand-name {
   background-color: black;
-} */
-
-.brand-name img{
-  width: 100%;
-  height: auto;
-}
-.brand-description {
+  } */
+  
+  .brand-name img{
+    width: 100%;
+    height: auto;
+  }
+  .brand-description {
     font-size: 0.875rem;
     color: var(--color-green);
     font-weight: bold;
-}
-
-/* About Section */
-.footer-about {
+  }
+  
+  /* About Section */
+  .footer-about {
     max-width: 400px;
+    width: 120%;
+
 }
 
 .footer-title {
-    font-size: 1.125rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-    align-self: start;
+  font-size: 1.125rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  align-self: start;
 }
 
 .footer-text {
-    font-size: 0.875rem;
-    color: #ffffff;
+  font-size: 0.875rem;
+  color: #ffffff;
 }
 
 /* Social Media */
 .footer-social {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-left: 3rem;
 }
 
 .social-links {
-    display: flex;
-    justify-content: flex-start;
-    gap: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
 }
 
 .social-icon  {
-    width: 24px;
-    height: 24px;
-    /* background-color: aqua; */
+  width: 24px;
+  height: 24px;
+  /* background-color: aqua; */
 }
 .social-icon:hover {
-    color: beige; /* Cambia el color a beige en hover */
+  color: beige; /* Cambia el color a beige en hover */
 }
-
 
 /* Copyright */
 .footer-copyright {
-    margin-top: 1.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid #2D3748;
-    text-align: center;
-    font-size: 0.875rem;
-    color: #ffffff;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #2D3748;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #ffffff;
 }
 
+@media (max-width: 767px) {
+  .footer-social {
+    margin-left: 0;
+  }
+  .footer-about {
+    width: 100%;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 767px) {
+  .brand-name img{
+    width: 80%;
+    height: auto;
+  }
+  
+  /* En proceso pero por alguna razon no funciona */
+  /* .footer-brand {
+    display: flex;
+    justify-content: center;
+  } */
+}
 </style>

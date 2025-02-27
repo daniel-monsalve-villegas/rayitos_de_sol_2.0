@@ -36,7 +36,9 @@ export default {
 
 <style>
 .body-seccion3 {
-  min-height: 100vh;
+  margin-top: 5rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,24 +46,32 @@ export default {
 }
 .container-seccion3 {
   max-width: 1120px;
-  max-height: 800px;
-  width: 100%;
   background-color: var(--color-light-green);
-  padding: 2.5rem;
+  padding: 2.5rem 1.2rem;
   border-radius: 0.7rem;
-  margin-top: 6rem;
 }
 .seccion3-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);;
+  gap: 10px;
+}
+
+.card-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+/* .seccion3-content {
   display: flex;
   flex-flow: row wrap;
   margin: 0 1.3rem;
+  display: ;
 }
 
 .card-wrapper{
 display: flex;
 gap: 20px;
 margin-bottom: 1.5rem;
-}
+} */
 /* .container-seccion3 h2 {
   display: flex;
   justify-content: center;
@@ -133,5 +143,51 @@ margin-bottom: 1.5rem;
 }
 .button-seccion3:hover {
   background-color: var(--color-green);
+}
+
+
+@media (max-width: 1100px) { 
+  .seccion3-content {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+  
+}
+
+@media (max-width: 700px) { 
+  .seccion3-content {
+    grid-template-columns: repeat(1, 1fr); 
+  }
+
+  .container-seccion3 {
+    padding: 1.7rem 0.2rem 0rem 0.2rem;
+  }
+}
+
+@media (max-width: 400px) { 
+  .container-seccion3 {
+    padding: 1.7rem 0.2rem 0rem 0.2rem;
+  }
+
+  /* .overlay-3 {
+  height: 100%;
+  width: 90%;
+} */
+
+  .image-content {
+    width: auto;
+}
+
+  .card {
+    width: auto;
+    height: auto;
+  }
+
+  .card-wrapper {
+  width: 100%;
+}
+
+.container-seccion3 {
+  width: 90%;
+}
 }
 </style>
