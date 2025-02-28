@@ -66,6 +66,11 @@ const routes = [
     name: 'DepartmentList',
     component: () => import('../components/DepartmentList.vue'),
   },
+  {
+    path: '/auth-callback',
+    name: 'authCallback',
+    component: () => import('../AuthCallback.vue'),
+  }
 ]
 
 const router = createRouter({

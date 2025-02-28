@@ -27,17 +27,40 @@
       </li>
     </ul>
 
+
     <!-- Botón de Login -->
-    <router-link class="navbar__link--login" to="/login-client">Login</router-link>
+    <div class="navbar__auth-buttons">
+
+      <button v-if="!isAuthenticated" @click="showLoginModal = true" class="navbar__link--login">Login</button>
+      <div v-else>
+        
+        <button class="navbar__link--login" @click="logoutUser">Logout</button>
+
+      </div>
+    </div>
+
+    <LoginModal v-if="showLoginModal" @close="showLoginModal = false" />
   </nav>
 </template>
 
-<script>
-export default {
-  name: "NavBar",
-};
-</script>
+<script setup>
 
+import { ref } from "vue";
+import { useAuth0 } from "@auth0/auth0-vue";
+import LoginModal from "../../components/LoginModal.vue"
+
+const { logout, user, isAuthenticated} = useAuth0();
+const showLoginModal = ref(false);
+
+const logoutUser = () => {
+  logout({
+    logoutParams: {
+      returnTo: window.location.origin 
+    }
+  });
+};
+
+</script>
 <style scoped>
 
 .navbar {
