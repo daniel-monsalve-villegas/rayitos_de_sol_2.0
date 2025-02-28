@@ -61,6 +61,11 @@ const routes = [
     name: 'contractorDashboard',
     component: () => import('../components/contractor/ContractorDashboard.vue'),
   },
+  {
+    path: '/Department-List-view',
+    name: 'DepartmentList',
+    component: () => import('../components/DepartmentList.vue'),
+  },
 ]
 
 const router = createRouter({

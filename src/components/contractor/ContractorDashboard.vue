@@ -1,46 +1,80 @@
 <template>
   <div class="contractorDasboard__container">
-    <div class="cdContainer__card"> 
+    <div class="cdContainer__card">
       <div class="containerCard__menuHamburger">
-        <div class="menuHamburger__svg"><img src="../../assets/img/hamburger.svg" alt=""></div>
-        <div class="menuHamburger__exict"><p class="exict__size">💨</p></div>
+        <div class="menuHamburger__svg">
+          <img src="../../assets/img/hamburger.svg" alt="Menú">
+        </div>
+        <div class="menuHamburger__exict">
+          <p class="exict__size">💨</p>
+        </div>
       </div>
+
+      <!-- Avatar -->
       <div class="menuHamburger__containerAvatar">
         <div class="containerAvatar__position">
-          <img class="avatar" src="../../assets/img/images.jpeg" alt="">
+          <img class="avatar" src="../../assets/img/images.jpeg" alt="Avatar">
         </div>
       </div>
-      <div class="menuHamburger__contactorInfo">
+
+      <!-- Información del contratista -->
+      <div class="menuHamburger__contactorInfo" v-if="contractor">
         <div class="contactorInfo__positionLeft">
           <ul class="contactorInfo__Ul">
-            <li>Id Contratista</li>
+            <li>ID Contratista</li>
             <li>Nombre de la empresa</li>
             <li>Código contratista</li>
             <li>Nombre contratista</li>
-            <li>Datos de contanto</li>
+            <li>Datos de contacto</li>
             <li>Experiencia</li>
             <li>Ubicación</li>
             <li>Servicios</li>
           </ul>
         </div>
+
         <div class="contactorInfo__positionRight">
           <ul class="contactorInfo__Ul">
-            <li>Id Contratista</li>
-            <li>Nombre de la empresa</li>
-            <li>Código contratista</li>
-            <li>Nombre contratista</li>
-            <li>Datos de contanto</li>
-            <li>Experiencia</li>
-            <li>Ubicación</li>
-            <li>Servicios</li>
+            <li>{{ contractor.idContractor }}</li>
+            <li>{{ contractor.nitEnterprise }}</li>
+            <li>{{ contractor.idContractor }}</li>
+            <li>{{ contractor.nameContractor }}</li>
+            <li class="contractorLiLargo">{{ contractor.emailContractor }} </li>
+            <li class="contractorLiLargo">{{ contractor.phoneContractor }}</li>
+            <li>{{ contractor.expertiseContractor }}</li>
+            <li>{{ contractor.locationContractor }}</li>
+            <li>Por definir</li>
           </ul>
-    </div>
+        </div>
       </div>
-    </div> 
+    </div>
   </div>
 </template>
 
-<style scoped> 
+<script>
+import { ref, onMounted } from "vue";
+import { getDashBoardContractor } from "@/services/dashboardContractors";
+
+export default {
+  setup() {
+    const contractor = ref(null);
+
+    onMounted(async () => {
+      try {
+        const response = await getDashBoardContractor();
+        contractor.value = response;
+      } catch (error) {
+        console.error("Error al obtener datos del contratista:", error);
+      }
+    });
+
+    return {
+      contractor
+    };
+  }
+};
+</script>
+
+<style scoped>
 /* Contenedor principal crema */
 .contractorDasboard__container{
   margin-top: 5em;
@@ -112,9 +146,9 @@
   height: 100%;
   width: auto;
   border-radius: 50%;
-  max-height: 100%; 
-  max-width: 100%; 
-  margin-bottom: 2rem;
+  margin-bottom: 2em;
+  max-height: 100%;
+  max-width: 100%;
 }
 
 /* Información contactor  */
@@ -134,7 +168,7 @@
 
 .contactorInfo__positionRight{
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   width: 50%;
 }
 
@@ -157,5 +191,16 @@ li{
   .contactorInfo__Ul {
     padding: 1rem;
   }
+}
+
+@media screen and (max-width: 650px) {
+  .contactorInfo__Ul li {
+    font-size: 1rem;
+  }
+  .contractorLiLargo {
+    word-break: break-word; /* Alternativa */
+    overflow-wrap: break-word; /* Mejor opción para navegadores modernos */
+    max-width: 100%; /* Para asegurarse de que respete el contenedor */
+}
 }
 </style>

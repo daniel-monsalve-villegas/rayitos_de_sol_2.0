@@ -1,9 +1,8 @@
 <template>
   <div class="body-seccion3">
     <div class="container-seccion3">
-      <!-- <h2>Servicios de los Compas</h2>  -->
       <div class="seccion3-content">
-        <div class="card-wrapper" v-for="data in contractor" :key="data.id">
+        <div class="card-wrapper" v-for="data in contractor" :key="data.idContractor">
           <div class="card">
             <div class="image-content">
               <span class="overlay-3"></span>
@@ -12,8 +11,12 @@
               </div>
             </div>
             <div class="card-content">
-              <h2 class="name">{{data.contratista}}</h2>
-              <p class="description">{{data.review}}</p>
+              <h2 class="name">{{ data.nameContractor }}</h2>
+              <p class="description"><strong>Especialidad:</strong> {{ data.expertiseContractor }}</p>
+              <p class="description"><strong>Email:</strong> {{ data.emailContractor }}</p>
+              <p class="description"><strong>Teléfono:</strong> {{ data.phoneContractor }}</p>
+              <p class="description"><strong>Ubicación:</strong> {{ data.locationContractor }}</p>
+              <p class="description"><strong>NIT:</strong> {{ data.nitEnterprise }}</p>
               <button class="button-seccion3">Saber Más</button>
             </div>
           </div>
@@ -24,14 +27,27 @@
 </template>
 
 <script>
-  import dataContractor from '../../assets/contractor.json'
+import { ref, onMounted } from "vue";
+import { getContractors } from "@/services/listContractor";
+
 export default {
-  data() {
+  setup() {
+    const contractor = ref([]);
+
+    onMounted(async () => {
+      try {
+        const response = await getContractors();
+        contractor.value = response;
+      } catch (error) {
+        console.error("Error al obtener contratistas:", error);
+      }
+    });
+
     return {
-      contractor: dataContractor,
-    }
+      contractor
+    };
   }
-}
+};
 </script>
 
 <style>
@@ -52,7 +68,7 @@ export default {
 }
 .seccion3-content {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);;
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
 
@@ -60,29 +76,12 @@ export default {
   margin-bottom: 1.5rem;
 }
 
-/* .seccion3-content {
-  display: flex;
-  flex-flow: row wrap;
-  margin: 0 1.3rem;
-  display: ;
-}
-
-.card-wrapper{
-display: flex;
-gap: 20px;
-margin-bottom: 1.5rem;
-} */
-/* .container-seccion3 h2 {
-  display: flex;
-  justify-content: center;
-  padding: 15px;
-}  */
 .card {
   width: 300px;
-  height:370px;
+  height: 370px;
   border-radius: 25px;
   background-color: #FFF;
-  margin: 0 1rem ;
+  margin: 0 1rem;
   margin-top: -0.8rem;
 }
 
@@ -145,49 +144,37 @@ margin-bottom: 1.5rem;
   background-color: var(--color-green);
 }
 
-
-@media (max-width: 1100px) { 
+@media (max-width: 1100px) {
   .seccion3-content {
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: repeat(2, 1fr);
   }
-  
 }
 
-@media (max-width: 700px) { 
+@media (max-width: 700px) {
   .seccion3-content {
-    grid-template-columns: repeat(1, 1fr); 
+    grid-template-columns: repeat(1, 1fr);
   }
-
   .container-seccion3 {
     padding: 1.7rem 0.2rem 0rem 0.2rem;
   }
 }
 
-@media (max-width: 400px) { 
+@media (max-width: 400px) {
   .container-seccion3 {
     padding: 1.7rem 0.2rem 0rem 0.2rem;
   }
-
-  /* .overlay-3 {
-  height: 100%;
-  width: 90%;
-} */
-
   .image-content {
     width: auto;
-}
-
+  }
   .card {
     width: auto;
     height: auto;
   }
-
   .card-wrapper {
-  width: 100%;
-}
-
-.container-seccion3 {
-  width: 90%;
-}
+    width: 100%;
+  }
+  .container-seccion3 {
+    width: 90%;
+  }
 }
 </style>
