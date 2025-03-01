@@ -1,73 +1,32 @@
-<!-- <script setup>
-import { ref, watch } from "vue";
-import { useAuth0 } from '@auth0/auth0-vue';
-import { useRouter } from 'vue-router';
-import api from '@/api/axiosInstance';
-
-const { isAuthenticated, user, isLoading, logout } = useAuth0();
-const router = useRouter();
-
-// Validar usuario basado en el email
-const validateUser = async (email) => {
-  console.log("📩 Enviando email a backend:", email);
-
-  try {
-    const response = await api.post("/auth0/validate-user", { email });
-    console.log("✅ Respuesta del backend:", response.data);
-
-    // Verificar el rol del usuario y la tabla en la que está registrado
-    if (response.data.role === "client") {
-      console.log("Usuario validado como Cliente");
-      console.log("Datos del usuario:", user.value);  // Muestra los datos del usuario
-      console.log("El usuario está en la tabla 'clients'");
-      router.push("/dashboard-client");
-
-    } else if (response.data.role === "contractor") {
-      console.log("Usuario validado como Contratista");
-      console.log("Datos del usuario:", user.value);  // Muestra los datos del usuario
-      console.log("El usuario está en la tabla 'contractors'");
-      router.push("/dashboard-contractor");
-    }
-
-  } catch (error) {
-    if (error.response && error.response.status === 401) {
-      console.error("❌ Error de validación: El usuario no está registrado en el sistema.");
-      alert("El usuario no está registrado en el sistema.");
-      logout({ returnTo: window.location.origin });
-    } else {
-      console.error("❌ Error de validación:", error);
-    }
-    debugger;  // Para depurar el error si es necesario
-  }
-};
-
-// Usamos un watcher para validar el usuario cuando el estado de isAuthenticated cambie
-watch(isLoading, (newValue) => {
-  if (!newValue && isAuthenticated.value && user.value?.email) {
-    validateUser(user.value.email);
-  }
-});
-</script>
-
-<template>
-  <div>
-    <p>Procesando login...</p>
-  </div>
-</template> -->
 <template>
     <div>
       <p>Procesando login...</p>
+  
+      <!-- Modal para ingresar el NIT si es un contratista -->
+      <div v-if="isContractor" class="modal">
+        <div class="modal-content">
+          <h3>Para continuar con el inicio de sesión, ingresa el NIT de tu empresa</h3>
+          <input type="text" v-model="nit" placeholder="NIT" />
+          <button @click="submitNIT">Enviar</button>
+        </div>
+      </div>
     </div>
   </template>
   
   <script setup>
-  import { watch } from 'vue';
+  import { watch, ref } from 'vue';
   import { useAuth0 } from '@auth0/auth0-vue';
   import api from '@/api/axiosInstance';
+  import { useRouter } from 'vue-router';
   
   const { isAuthenticated, user, isLoading, logout } = useAuth0();
+  const router = useRouter();
   
-  // Función para validar al usuario en el backend
+  const isContractor = ref(false);
+  const nit = ref("");
+  let storedNIT = ""; // Variable para almacenar el NIT del backend
+  
+  // Función para validar el usuario en el backend
   const validateUser = async (email) => {
     console.log("📩 Enviando email a backend:", email);
   
@@ -75,25 +34,41 @@ watch(isLoading, (newValue) => {
       const response = await api.get(`/search/email/${email}`);
       console.log("✅ Resultado de la búsqueda:", response.data);
   
-      // Verificar si la respuesta contiene idContractor o idClient
       if (response.data.idContractor) {
         console.log("🔧 El usuario es un contratista.");
-        localStorage.setItem("userType", "contractor");
+        isContractor.value = true; // Establecer que es contratista
+        storedNIT = response.data.nitEnterprise; // Guardar el NIT del contratista
+        localStorage.setItem("userType", "contractor"); // Guardar tipo de usuario
       } else if (response.data.idClient) {
         console.log("👥 El usuario es un cliente.");
-        localStorage.setItem("userType", "client");
+        localStorage.setItem("userType", "client"); // Guardar tipo de usuario
       } else {
-        console.log("⚠️ El usuario no es ni cliente ni contratista.");
+        // Si no es ni contratista ni cliente, cerramos sesión
+        console.log("⚠️ El usuario no está registrado como contratista ni cliente.");
+        logout({ returnTo: window.location.origin }); // Cerrar sesión si no está registrado
       }
   
     } catch (error) {
-      if (error.response && error.response.status === 404) {
-        // Si el usuario no se encuentra, cerramos la sesión automáticamente
-        console.error("❌ El usuario no se encuentra en el sistema, cerrando sesión...");
-        logout({ returnTo: window.location.origin }); // Cierra la sesión y redirige a la página principal
-      } else {
-        console.error("❌ Error al buscar el email:", error);
-      }
+      console.error("❌ Error al buscar el email:", error);
+      // Cerrar sesión si ocurre un error de búsqueda
+      logout({ returnTo: window.location.origin });
+    }
+  };
+  
+  // Función para enviar el NIT cuando el contratista lo ingresa
+  const submitNIT = () => {
+    console.log("📑 NIT ingresado por el usuario:", nit.value);
+    console.log("📑 NIT recibido del backend:", storedNIT);
+  
+    if (nit.value === storedNIT) {
+      console.log("✅ Los NIT coinciden.");
+      localStorage.setItem("contractorNIT", nit.value); // Guardar el NIT en localStorage
+      isContractor.value = false; // Cerrar el modal sin cerrar sesión
+      // Redirigir al dashboard del contratista
+      router.push("/dashboard-contractor");
+    } else {
+      console.log("❌ Los NIT no coinciden.");
+      // Mostrar un mensaje de error si los NIT no coinciden
     }
   };
   
@@ -105,4 +80,55 @@ watch(isLoading, (newValue) => {
     }
   });
   </script>
+  
+  <style scoped>
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    pointer-events: all; /* Bloquear interacción con el fondo */
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: center;
+  }
+  
+  .modal h3 {
+    font-size: 1.2em;
+    margin-bottom: 1rem;
+  }
+  
+  .modal input {
+    padding: 10px;
+    margin: 10px 0;
+    width: 80%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .modal button {
+    padding: 10px 20px;
+    background-color: var(--color-dark-green);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .modal button:hover {
+    background-color: var(--color-light-green);
+  }
+  </style>
   
