@@ -1,14 +1,14 @@
 <template>
   <nav class="navbar">
     <!-- Logo -->
-    <div class="navbar__logo">
-      <img src="../../assets/img/logo.png" alt="Logo">
+    <div class="navbar__logo" @click="goHome">
+      <img src="../../assets/img/logo.png" alt="Logo" />
     </div>
 
     <!-- Checkbox para el menú hamburguesa -->
-    <input type="checkbox" id="navbar-toggle-menu" class="navbar__checkbox">
+    <input type="checkbox" id="navbar-toggle-menu" class="navbar__checkbox" />
     <label for="navbar-toggle-menu" class="navbar__label">
-      <img src="../../assets/img/hamburger.svg" alt="Menú" class="navbar__hamburger-svg">
+      <img src="../../assets/img/hamburger.svg" alt="Menú" class="navbar__hamburger-svg" />
     </label>
 
     <!-- Menú de navegación -->
@@ -17,10 +17,10 @@
         <router-link class="navbar__link" to="/about">Rayitos de sol</router-link>
       </li>
       <li class="navbar__item">
-        <router-link class="navbar__link" to="/client-dashboard">Materiales</router-link>
+        <router-link class="navbar__link" to="/contratista">Contratistas</router-link>
       </li>
       <li class="navbar__item">
-        <router-link class="navbar__link" to="/login-contractor">Contratistas</router-link>
+        <router-link class="navbar__link" to="/calculator">Calculadora</router-link>
       </li>
       <li class="navbar__item">
         <router-link class="navbar__link" to="/contact">Contáctanos</router-link>
@@ -44,48 +44,52 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useAuth0 } from '@auth0/auth0-vue';
-import { useRouter } from 'vue-router';
+import { ref, computed } from 'vue'
+import { useAuth0 } from '@auth0/auth0-vue'
+import { useRouter, useRoute } from 'vue-router'
 
-const { logout, isAuthenticated, user, loginWithRedirect } = useAuth0();
-const router = useRouter();
-const dropdownVisible = ref(false);
+const { logout, isAuthenticated, user, loginWithRedirect } = useAuth0()
+const router = useRouter()
+const route = useRoute()
+const dropdownVisible = ref(false)
+
+const goHome = () => {
+  location.href = '/'
+}
 
 // Obtener el nombre del usuario desde Auth0
-const userName = computed(() => user.value ? user.value.name : 'Usuario');
+const userName = computed(() => (user.value ? user.value.name : 'Usuario'))
 
 // Función para mostrar/ocultar el menú desplegable
 const toggleDropdown = () => {
-  dropdownVisible.value = !dropdownVisible.value;
+  dropdownVisible.value = !dropdownVisible.value
 }
 
 // Función para redirigir al dashboard según el tipo de usuario
 const goToDashboard = () => {
-  const userType = localStorage.getItem("userType");
-  if (userType === "contractor") {
-    router.push("/contractor-dashboard");
-  } else if (userType === "client") {
-    router.push("/client-dashboard");
+  const userType = localStorage.getItem('userType')
+  if (userType === 'contractor') {
+    router.push('/contractor-dashboard')
+  } else if (userType === 'client') {
+    router.push('/client-dashboard')
   }
-};
+}
 
 // Función para iniciar sesión
 const login = () => {
-  loginWithRedirect();
-};
+  loginWithRedirect()
+}
 
 // Función para cerrar sesión
 const logoutUser = () => {
   logout({
     logoutParams: {
-      returnTo: window.location.origin
-    }
-  });
-};
+      returnTo: window.location.origin,
+    },
+  })
+}
 </script>
 <style scoped>
-
 .navbar {
   display: flex;
   align-items: center;
@@ -102,7 +106,6 @@ const logoutUser = () => {
 .navbar__logo img {
   height: 3.5rem;
 }
-
 
 .navbar__menu {
   display: flex;
@@ -127,14 +130,13 @@ const logoutUser = () => {
   padding: 8px 8px;
   border-radius: 25px;
   font-size: 1em;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
-
-
-
-.navbar__link::after{
-  content: "";
+.navbar__link::after {
+  content: '';
   height: 4px;
   width: 0;
   background-color: var(--color-cream);
@@ -142,7 +144,7 @@ const logoutUser = () => {
   transition: all 300ms;
 }
 
-.navbar__link:hover::after{
+.navbar__link:hover::after {
   width: 100%;
 }
 
@@ -153,7 +155,9 @@ const logoutUser = () => {
   padding: 10px 20px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
   margin-left: auto;
 }
 

@@ -96,23 +96,85 @@
       </div>
     </div>
     <div class="contact">
-      <form class="contact__form">
-        <label class="contact__label">Nombre:</label>
-        <input class="contact__input" type="text" required />
-        
-        <label class="contact__label">Correo:</label>
-        <input class="contact__input" type="email" required />
-        
-        <label class="contact__label">Mensaje:</label>
-        <textarea class="contact__textarea" required></textarea>
-        
-        <button class="contact__button" type="submit">Enviar</button>
-      </form>
+      <form class="contact__form" @submit.prevent="sendContactForm">
+    <label class="contact__label" for="name">Nombre:</label>
+    <input
+      id="name"
+      class="contact__input"
+      type="text"
+      v-model="formData.nameContact"
+      required
+    />
 
+    <label class="contact__label" for="email">Correo:</label>
+    <input
+      id="email"
+      class="contact__input"
+      type="email"
+      v-model="formData.emailContact"
+      required
+    />
+
+    <label class="contact__label" for="message">Mensaje:</label>
+    <textarea
+      id="message"
+      class="contact__textarea"
+      v-model="formData.messageContact"
+      required
+    ></textarea>
+
+    <button class="contact__button" type="submit" :disabled="isSubmitting">
+      {{ isSubmitting ? "Enviando..." : "Enviar" }}
+    </button>
+    <!-- Modal de mensaje -->
+    <div v-if="showModal" class="modal">
+      <div class="modal-content">
+        <p>{{ modalMessage }}</p>
+        <button @click="showModal = false">OK</button>
+      </div>
+    </div>
+  </form>
     </div>
   </div>  
 </div>
 </template>
+
+<script setup>
+import { ref } from "vue";
+import api from "@/api/axiosInstance";
+
+const formData = ref({
+  nameContact: "",
+  emailContact: "",
+  messageContact: ""
+});
+const isSubmitting = ref(false);
+const showModal = ref(false);
+const modalMessage = ref("");
+
+const sendContactForm = async () => {
+  if (isSubmitting.value) return;
+
+  isSubmitting.value = true;
+  console.log("Enviando datos a la API:", JSON.parse(JSON.stringify(formData.value)));
+
+  try {
+    await api.post("/contact", { ...formData.value });
+
+    modalMessage.value = "Mensaje enviado con éxito";
+    showModal.value = true;
+
+    formData.value = { nameContact: "", emailContact: "", messageContact: "" };
+  } catch (error) {
+    console.error("Error al enviar el formulario:", error.response?.data || error.message);
+    
+    modalMessage.value = "Hubo un problema al enviar el mensaje";
+    showModal.value = true;
+  } finally {
+    isSubmitting.value = false;
+  }
+};
+</script>
 
 <style scoped>
 :root {
@@ -127,6 +189,35 @@
   --background-color-primary: var(--color-cream);
   --background-color-secondary: var(--color-light-green);
 }
+/* Estilos del modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+.modal-content button {
+  margin-top: 10px;
+  padding: 5px 15px;
+  border: none;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
 
 .contactUs__container{
   margin-top: 5em;
