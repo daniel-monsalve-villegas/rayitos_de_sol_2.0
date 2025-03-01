@@ -1,134 +1,199 @@
 <template>
-    <div>
-      <p>Procesando login...</p>
-  
-      <!-- Modal para ingresar el NIT si es un contratista -->
-      <div v-if="isContractor" class="modal">
-        <div class="modal-content">
-          <h3>Para continuar con el inicio de sesión, ingresa el NIT de tu empresa</h3>
-          <input type="text" v-model="nit" placeholder="NIT" />
-          <button @click="submitNIT">Enviar</button>
-        </div>
+  <div>
+    <p>Procesando login...</p>
+
+    <!-- Bloqueo global cuando cualquier modal está abierto -->
+    <div v-if="showNitModal || showRegisterModal" class="page-blocker"></div>
+
+    <!-- Modal de validación de NIT -->
+    <div v-if="showNitModal" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Ingrese su NIT</h2>
+        <input v-model="enteredNit" type="text" placeholder="Ingrese su NIT" ref="nitInput" />
+        <p v-if="nitError" class="error-text">❌ NIT incorrecto. Inténtelo de nuevo.</p>
+        <button @click="validateNit">Validar</button>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  import { watch, ref } from 'vue';
-  import { useAuth0 } from '@auth0/auth0-vue';
-  import api from '@/api/axiosInstance';
-  import { useRouter } from 'vue-router';
-  
-  const { isAuthenticated, user, isLoading, logout } = useAuth0();
-  const router = useRouter();
-  
-  const isContractor = ref(false);
-  const nit = ref("");
-  let storedNIT = ""; // Variable para almacenar el NIT del backend
-  
-  // Función para validar el usuario en el backend
-  const validateUser = async (email) => {
-    console.log("📩 Enviando email a backend:", email);
-  
-    try {
-      const response = await api.get(`/search/email/${email}`);
-      console.log("✅ Resultado de la búsqueda:", response.data);
-  
-      if (response.data.idContractor) {
-        console.log("🔧 El usuario es un contratista.");
-        isContractor.value = true; // Establecer que es contratista
-        storedNIT = response.data.nitEnterprise; // Guardar el NIT del contratista
-        localStorage.setItem("userType", "contractor"); // Guardar tipo de usuario
-      } else if (response.data.idClient) {
-        console.log("👥 El usuario es un cliente.");
-        localStorage.setItem("userType", "client"); // Guardar tipo de usuario
-      } else {
-        // Si no es ni contratista ni cliente, cerramos sesión
-        console.log("⚠️ El usuario no está registrado como contratista ni cliente.");
-        logout({ returnTo: window.location.origin }); // Cerrar sesión si no está registrado
-      }
-  
-    } catch (error) {
-      console.error("❌ Error al buscar el email:", error);
-      // Cerrar sesión si ocurre un error de búsqueda
-      logout({ returnTo: window.location.origin });
-    }
-  };
-  
-  // Función para enviar el NIT cuando el contratista lo ingresa
-  const submitNIT = () => {
-    console.log("📑 NIT ingresado por el usuario:", nit.value);
-    console.log("📑 NIT recibido del backend:", storedNIT);
-  
-    if (nit.value === storedNIT) {
-      console.log("✅ Los NIT coinciden.");
-      localStorage.setItem("contractorNIT", nit.value); // Guardar el NIT en localStorage
-      isContractor.value = false; // Cerrar el modal sin cerrar sesión
-      // Redirigir al dashboard del contratista
-      router.push("/dashboard-contractor");
-    } else {
-      console.log("❌ Los NIT no coinciden.");
-      // Mostrar un mensaje de error si los NIT no coinciden
-    }
-  };
-  
-  // Usar un watcher para validar el usuario cuando el estado de isAuthenticated cambie
-  watch(isLoading, (newValue) => {
-    if (!newValue && isAuthenticated.value && user.value?.email) {
-      console.log("✔ Usuario autenticado con éxito:", user.value.email);
-      validateUser(user.value.email);
+
+    <!-- Modal de registro obligatorio -->
+    <div v-if="showRegisterModal" class="modal-overlay">
+      <div class="modal-content">
+        <h2>¡No estás registrado!</h2>
+        <p>Por favor, selecciona una opción para registrarte.</p>
+        <button @click="registerAsContractor">Registrar como Contratista</button>
+        <button @click="registerAsClient">Registrar como Cliente</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, watch, onMounted, onUnmounted, nextTick } from "vue";
+import { useRouter } from "vue-router";
+import { useAuth0 } from "@auth0/auth0-vue";
+import api from "@/api/axiosInstance";
+
+const router = useRouter();
+const { isAuthenticated, user, isLoading, logout } = useAuth0();
+const userType = ref(null);
+const showNitModal = ref(false);
+const showRegisterModal = ref(false);
+const enteredNit = ref("");
+const nitEnterprise = ref(null);
+const nitError = ref(false);
+const nitInput = ref(null);
+const userEmail = ref("");
+
+// Bloquear interacciones en la página
+const disableInteractions = () => {
+  document.body.style.overflow = "hidden"; // Bloquea scroll
+  document.querySelectorAll("button, a, input, select").forEach((el) => {
+    if (!el.closest(".modal-content")) {
+      el.setAttribute("disabled", "true"); // Deshabilita botones y links fuera del modal
     }
   });
-  </script>
-  
-  <style scoped>
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    pointer-events: all; /* Bloquear interacción con el fondo */
+};
+
+// Restaurar interacciones en la página
+const enableInteractions = () => {
+  document.body.style.overflow = "auto";
+  document.querySelectorAll("button, a, input, select").forEach((el) => {
+    el.removeAttribute("disabled"); // Habilita botones y links
+  });
+};
+
+// Redirecciones con email prellenado
+const registerAsContractor = () => {
+  router.push({ path: "/register-contractor", query: { email: userEmail.value } });
+};
+
+const registerAsClient = () => {
+  router.push({ path: "/register-client", query: { email: userEmail.value } });
+};
+
+// Función para validar usuario en backend
+const validateUser = async (email) => {
+  console.log("📩 Enviando email a backend:", email);
+  userEmail.value = email; // Guardamos el email para el registro
+
+  try {
+    const response = await api.get(`/search/email/${email}`);
+    console.log("✅ Resultado de la búsqueda:", response.data);
+
+    if (response.data.idContractor) {
+      console.log("🔧 El usuario es un contratista.");
+      userType.value = "contractor";
+      nitEnterprise.value = response.data.nitEnterprise;
+      showNitModal.value = true;
+      disableInteractions();
+      nextTick(() => nitInput.value?.focus());
+    } else if (response.data.idClient) {
+      console.log("👥 El usuario es un cliente.");
+      userType.value = "client";
+    } else {
+      console.log("⚠️ El usuario no está registrado.");
+      showRegisterModal.value = true;
+      disableInteractions();
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      console.error("❌ Usuario no registrado, mostrando opciones de registro...");
+      showRegisterModal.value = true;
+      disableInteractions();
+    } else {
+      console.error("❌ Error al buscar el email:", error);
+    }
   }
-  
-  .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    width: 300px;
-    text-align: center;
+};
+
+// Validar el NIT ingresado
+const validateNit = () => {
+  if (enteredNit.value === nitEnterprise.value) {
+    console.log("✅ NIT validado correctamente.");
+    localStorage.setItem("userType", "contractor");
+    showNitModal.value = false;
+    enableInteractions();
+  } else {
+    console.log("❌ NIT incorrecto.");
+    nitError.value = true;
   }
-  
-  .modal h3 {
-    font-size: 1.2em;
-    margin-bottom: 1rem;
+};
+
+// Observar cambios en la autenticación
+watch(isLoading, (newValue) => {
+  if (!newValue && isAuthenticated.value && user.value?.email) {
+    console.log("✔ Usuario autenticado:", user.value.email);
+    validateUser(user.value.email);
   }
-  
-  .modal input {
-    padding: 10px;
-    margin: 10px 0;
-    width: 80%;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  .modal button {
-    padding: 10px 20px;
-    background-color: var(--color-dark-green);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .modal button:hover {
-    background-color: var(--color-light-green);
-  }
-  </style>
-  
+});
+
+// Restaurar interacciones al desmontar el componente
+onUnmounted(() => {
+  enableInteractions();
+});
+</script>
+
+<style scoped>
+/* Bloqueo total de interacción */
+.page-blocker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 998;
+  pointer-events: all;
+}
+
+/* Fondo del modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  z-index: 999;
+}
+
+/* Contenido del modal */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 5px;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.error-text {
+  color: red;
+  font-size: 14px;
+}
+</style>
