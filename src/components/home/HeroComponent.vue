@@ -15,7 +15,7 @@
 
       </div>
 
-      <a href="" class="hero__calculator-link">
+      <router-link to="/calculator" href="" class="hero__calculator-link">
 
 
         <div class="hero__container-right">
@@ -47,7 +47,7 @@
         </div>
 
 
-      </a>
+      </router-link>
     </div>
   </section>
 </template>
