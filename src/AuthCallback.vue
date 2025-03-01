@@ -1,54 +1,108 @@
-<template>
-  <div>
-    <p>Procesando inicio de sesión...</p>
-  </div>
-</template>
+<!-- <script setup>
+import { ref, watch } from "vue";
+import { useAuth0 } from '@auth0/auth0-vue';
+import { useRouter } from 'vue-router';
+import api from '@/api/axiosInstance';
 
-<script setup>
-import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import axios from 'axios'
+const { isAuthenticated, user, isLoading, logout } = useAuth0();
+const router = useRouter();
 
-const router = useRouter()
-
-onMounted(async () => {
-  console.log("Iniciando el proceso de callback...");
-
-  // Captura el código de la URL (se espera que esté en la URL después de la redirección de Auth0)
-  const urlParams = new URLSearchParams(window.location.search);
-  const code = urlParams.get('code');
-  
-  if (!code) {
-    console.error("No se encontró el código en la URL");
-    return;
-  }
+// Validar usuario basado en el email
+const validateUser = async (email) => {
+  console.log("📩 Enviando email a backend:", email);
 
   try {
-    // Enviar el código al backend para obtener el token de acceso
-    console.log("Enviando el código al backend para obtener el token...", code);
-    const response = await axios.post('http://localhost:8080/api/auth0/token', { code });
+    const response = await api.post("/auth0/validate-user", { email });
+    console.log("✅ Respuesta del backend:", response.data);
 
-    const token = response.data.access_token;
-    console.log("Token obtenido:", token);
+    // Verificar el rol del usuario y la tabla en la que está registrado
+    if (response.data.role === "client") {
+      console.log("Usuario validado como Cliente");
+      console.log("Datos del usuario:", user.value);  // Muestra los datos del usuario
+      console.log("El usuario está en la tabla 'clients'");
+      router.push("/dashboard-client");
 
-    // Guardar el token en localStorage para futuras peticiones
-    localStorage.setItem('auth0_token', token);
+    } else if (response.data.role === "contractor") {
+      console.log("Usuario validado como Contratista");
+      console.log("Datos del usuario:", user.value);  // Muestra los datos del usuario
+      console.log("El usuario está en la tabla 'contractors'");
+      router.push("/dashboard-contractor");
+    }
 
-    // Opcional: Hacer una solicitud para obtener la metadata del usuario con el token
-    const userMetadata = await axios.get('https://dev-yqne2f86vz7fs1zt.us.auth0.com/userinfo', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log("Metadata del usuario:", userMetadata.data);
-
-    // Guardar la metadata del usuario en el localStorage (si lo deseas)
-    localStorage.setItem('user_metadata', JSON.stringify(userMetadata.data));
-
-    // Redirigir al usuario a la página principal
-    router.push('/');
   } catch (error) {
-    console.error('Error al obtener el token o la metadata del usuario:', error);
+    if (error.response && error.response.status === 401) {
+      console.error("❌ Error de validación: El usuario no está registrado en el sistema.");
+      alert("El usuario no está registrado en el sistema.");
+      logout({ returnTo: window.location.origin });
+    } else {
+      console.error("❌ Error de validación:", error);
+    }
+    debugger;  // Para depurar el error si es necesario
+  }
+};
+
+// Usamos un watcher para validar el usuario cuando el estado de isAuthenticated cambie
+watch(isLoading, (newValue) => {
+  if (!newValue && isAuthenticated.value && user.value?.email) {
+    validateUser(user.value.email);
   }
 });
 </script>
+
+<template>
+  <div>
+    <p>Procesando login...</p>
+  </div>
+</template> -->
+<template>
+    <div>
+      <p>Procesando login...</p>
+    </div>
+  </template>
+  
+  <script setup>
+  import { watch } from 'vue';
+  import { useAuth0 } from '@auth0/auth0-vue';
+  import api from '@/api/axiosInstance';
+  
+  const { isAuthenticated, user, isLoading, logout } = useAuth0();
+  
+  // Función para validar al usuario en el backend
+  const validateUser = async (email) => {
+    console.log("📩 Enviando email a backend:", email);
+  
+    try {
+      const response = await api.get(`/search/email/${email}`);
+      console.log("✅ Resultado de la búsqueda:", response.data);
+  
+      // Verificar si la respuesta contiene idContractor o idClient
+      if (response.data.idContractor) {
+        console.log("🔧 El usuario es un contratista.");
+        localStorage.setItem("userType", "contractor");
+      } else if (response.data.idClient) {
+        console.log("👥 El usuario es un cliente.");
+        localStorage.setItem("userType", "client");
+      } else {
+        console.log("⚠️ El usuario no es ni cliente ni contratista.");
+      }
+  
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        // Si el usuario no se encuentra, cerramos la sesión automáticamente
+        console.error("❌ El usuario no se encuentra en el sistema, cerrando sesión...");
+        logout({ returnTo: window.location.origin }); // Cierra la sesión y redirige a la página principal
+      } else {
+        console.error("❌ Error al buscar el email:", error);
+      }
+    }
+  };
+  
+  // Usar un watcher para validar el usuario cuando el estado de isAuthenticated cambie
+  watch(isLoading, (newValue) => {
+    if (!newValue && isAuthenticated.value && user.value?.email) {
+      console.log("✔ Usuario autenticado con éxito:", user.value.email);
+      validateUser(user.value.email);
+    }
+  });
+  </script>
+  
