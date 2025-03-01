@@ -2,10 +2,10 @@
   <div>
     <p>Procesando login...</p>
 
-    <!-- Capa de bloqueo para evitar interacción fuera del modal -->
-    <div v-if="showNitModal" class="page-blocker"></div>
+    <!-- Bloqueo global cuando cualquier modal está abierto -->
+    <div v-if="showNitModal || showRegisterModal" class="page-blocker"></div>
 
-    <!-- Modal obligatorio para contratistas -->
+    <!-- Modal de validación de NIT -->
     <div v-if="showNitModal" class="modal-overlay">
       <div class="modal-content">
         <h2>Ingrese su NIT</h2>
@@ -14,21 +14,35 @@
         <button @click="validateNit">Validar</button>
       </div>
     </div>
+
+    <!-- Modal de registro obligatorio -->
+    <div v-if="showRegisterModal" class="modal-overlay">
+      <div class="modal-content">
+        <h2>¡No estás registrado!</h2>
+        <p>Por favor, selecciona una opción para registrarte.</p>
+        <button @click="registerAsContractor">Registrar como Contratista</button>
+        <button @click="registerAsClient">Registrar como Cliente</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, watch, onMounted, onUnmounted, nextTick } from "vue";
+import { useRouter } from "vue-router";
 import { useAuth0 } from "@auth0/auth0-vue";
 import api from "@/api/axiosInstance";
 
+const router = useRouter();
 const { isAuthenticated, user, isLoading, logout } = useAuth0();
 const userType = ref(null);
 const showNitModal = ref(false);
+const showRegisterModal = ref(false);
 const enteredNit = ref("");
 const nitEnterprise = ref(null);
 const nitError = ref(false);
 const nitInput = ref(null);
+const userEmail = ref("");
 
 // Bloquear interacciones en la página
 const disableInteractions = () => {
@@ -48,9 +62,19 @@ const enableInteractions = () => {
   });
 };
 
-// Función para validar usuario
+// Redirecciones con email prellenado
+const registerAsContractor = () => {
+  router.push({ path: "/register-contractor", query: { email: userEmail.value } });
+};
+
+const registerAsClient = () => {
+  router.push({ path: "/register-client", query: { email: userEmail.value } });
+};
+
+// Función para validar usuario en backend
 const validateUser = async (email) => {
   console.log("📩 Enviando email a backend:", email);
+  userEmail.value = email; // Guardamos el email para el registro
 
   try {
     const response = await api.get(`/search/email/${email}`);
@@ -62,19 +86,20 @@ const validateUser = async (email) => {
       nitEnterprise.value = response.data.nitEnterprise;
       showNitModal.value = true;
       disableInteractions();
-
-      // Esperar a que el modal se renderice y forzar el focus en el input
       nextTick(() => nitInput.value?.focus());
     } else if (response.data.idClient) {
       console.log("👥 El usuario es un cliente.");
       userType.value = "client";
     } else {
-      console.log("⚠️ El usuario no es ni cliente ni contratista.");
+      console.log("⚠️ El usuario no está registrado.");
+      showRegisterModal.value = true;
+      disableInteractions();
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      console.error("❌ Usuario no registrado, cerrando sesión...");
-      
+      console.error("❌ Usuario no registrado, mostrando opciones de registro...");
+      showRegisterModal.value = true;
+      disableInteractions();
     } else {
       console.error("❌ Error al buscar el email:", error);
     }
@@ -153,11 +178,18 @@ input {
 }
 
 button {
+  display: block;
+  width: 100%;
   padding: 10px;
+  margin: 10px 5px;
   background: #007bff;
   color: white;
   border: none;
   cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
 }
 
 .error-text {
