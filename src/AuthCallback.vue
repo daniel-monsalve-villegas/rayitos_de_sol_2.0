@@ -90,6 +90,8 @@ const validateUser = async (email) => {
     } else if (response.data.idClient) {
       console.log("👥 El usuario es un cliente.");
       userType.value = "client";
+      console.log("user", userType)
+      localStorage.setItem("userType", userType.value)
       router.push("/");
     } else {
       console.log("⚠️ El usuario no está registrado.");

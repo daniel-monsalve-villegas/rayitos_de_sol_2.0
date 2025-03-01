@@ -22,13 +22,12 @@
         <div class="contactorInfo__positionLeft">
           <ul class="contactorInfo__Ul">
             <li>ID Contratista</li>
-            <li>Nombre de la empresa</li>
-            <li>Código contratista</li>
-            <li>Nombre contratista</li>
-            <li>Datos de contacto</li>
-            <li>Experiencia</li>
-            <li>Ubicación</li>
+            <li>Nit Empresa</li>
+            <li>Nombre</li>
+            <li>Email</li>
+            <li>Teléfono</li>
             <li>Servicios</li>
+            <li>Ubicación</li>
           </ul>
         </div>
 
@@ -36,43 +35,134 @@
           <ul class="contactorInfo__Ul">
             <li>{{ contractor.idContractor }}</li>
             <li>{{ contractor.nitEnterprise }}</li>
-            <li>{{ contractor.idContractor }}</li>
             <li>{{ contractor.nameContractor }}</li>
             <li class="contractorLiLargo">{{ contractor.emailContractor }} </li>
             <li class="contractorLiLargo">{{ contractor.phoneContractor }}</li>
             <li>{{ contractor.expertiseContractor }}</li>
             <li>{{ contractor.locationContractor }}</li>
-            <li>Por definir</li>
           </ul>
+        </div>
+
+        <div class="contractorDashboard__danger-zone">
+          <h2 class="danger__zone-title">⚠️ Danger Zone</h2>
+          <button class="danger__zone-button" @click="openUpdateModal">Modificar Contratista</button>
+          <button class="danger__zone-button" @click="openDeleteModal">Eliminar Contratista</button>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Modal de actualización -->
+  <div v-if="showUpdateModal" class="modal">
+    <div class="modal-content">
+      <h2>Actualizar Contratista</h2>
+      <form @submit.prevent="updateContractor">
+        <label>NIT Empresa</label>
+        <input v-model="formData.nitEnterprise" required />
+        <label>Nombre</label>
+        <input v-model="formData.nameContractor" required />
+        <label>Teléfono</label>
+        <input v-model="formData.phoneContractor" required />
+        <label>Servicios</label>
+        <input v-model="formData.expertiseContractor" required />
+        <label>Ubicación</label>
+        <input v-model="formData.locationContractor" required />
+        <button type="submit">Actualizar</button>
+        <button type="button" @click="showUpdateModal = false">Cancelar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de eliminación -->
+  <div v-if="showDeleteModal" class="modal">
+    <div class="modal-content">
+      <h2>Eliminar Contratista</h2>
+      <p>Escribe "ELIMINAR" para confirmar:</p>
+      <input v-model="deleteConfirmation" @input="formatDeleteInput" placeholder="ELIMINAR" required />
+      <button @click="deleteContractor" :disabled="deleteConfirmation !== 'ELIMINAR'">Confirmar</button>
+      <button @click="showDeleteModal = false">Cancelar</button>
+    </div>
+  </div>
 </template>
 
-<script>
+<script setup>
 import { ref, onMounted } from "vue";
+import api from "@/api/axiosInstance";
 import { getDashBoardContractor } from "@/services/dashboardContractors";
+import { useRouter } from "vue-router";
 
-export default {
-  setup() {
-    const contractor = ref(null);
+const contractor = ref(null);
+const showUpdateModal = ref(false);
+const showDeleteModal = ref(false);
+const deleteConfirmation = ref("");
+const formData = ref({});
+const router = useRouter();
 
-    onMounted(async () => {
-      try {
-        const response = await getDashBoardContractor();
-        contractor.value = response;
-      } catch (error) {
-        console.error("Error al obtener datos del contratista:", error);
-      }
-    });
+onMounted(async () => {
+  try {
+    const response = await getDashBoardContractor();
+    contractor.value = response;
+  } catch (error) {
+    console.error("Error al obtener datos del contratista:", error);
+  }
+});
 
-    return {
-      contractor
-    };
+const openUpdateModal = () => {
+  formData.value = { ...contractor.value };
+  showUpdateModal.value = true;
+};
+
+const updateContractor = async () => {
+  try {
+    await api.put(`/contractor/${contractor.value.idContractor}`, formData.value);
+    showUpdateModal.value = false;
+    contractor.value = { ...formData.value };
+  } catch (error) {
+    console.error("Error al actualizar contratista:", error);
+  }
+};
+
+const openDeleteModal = () => {
+  deleteConfirmation.value = "";
+  showDeleteModal.value = true;
+};
+
+const formatDeleteInput = () => {
+  deleteConfirmation.value = deleteConfirmation.value.toUpperCase();
+};
+
+const deleteContractor = async () => {
+  try {
+    await api.delete(`/contractor/${contractor.value.idContractor}`);
+    showDeleteModal.value = false;
+    contractor.value = null;
+    router.push("/login");
+  } catch (error) {
+    console.error("Error al eliminar contratista:", error);
   }
 };
 </script>
+
+
+<style scoped>
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+</style>
+
 
 <style scoped>
 /* Contenedor principal crema */
