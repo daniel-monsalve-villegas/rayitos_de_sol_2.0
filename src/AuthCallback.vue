@@ -1,108 +1,167 @@
-<!-- <script setup>
-import { ref, watch } from "vue";
-import { useAuth0 } from '@auth0/auth0-vue';
-import { useRouter } from 'vue-router';
-import api from '@/api/axiosInstance';
+<template>
+  <div>
+    <p>Procesando login...</p>
+
+    <!-- Capa de bloqueo para evitar interacción fuera del modal -->
+    <div v-if="showNitModal" class="page-blocker"></div>
+
+    <!-- Modal obligatorio para contratistas -->
+    <div v-if="showNitModal" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Ingrese su NIT</h2>
+        <input v-model="enteredNit" type="text" placeholder="Ingrese su NIT" ref="nitInput" />
+        <p v-if="nitError" class="error-text">❌ NIT incorrecto. Inténtelo de nuevo.</p>
+        <button @click="validateNit">Validar</button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, watch, onMounted, onUnmounted, nextTick } from "vue";
+import { useAuth0 } from "@auth0/auth0-vue";
+import api from "@/api/axiosInstance";
 
 const { isAuthenticated, user, isLoading, logout } = useAuth0();
-const router = useRouter();
+const userType = ref(null);
+const showNitModal = ref(false);
+const enteredNit = ref("");
+const nitEnterprise = ref(null);
+const nitError = ref(false);
+const nitInput = ref(null);
 
-// Validar usuario basado en el email
+// Bloquear interacciones en la página
+const disableInteractions = () => {
+  document.body.style.overflow = "hidden"; // Bloquea scroll
+  document.querySelectorAll("button, a, input, select").forEach((el) => {
+    if (!el.closest(".modal-content")) {
+      el.setAttribute("disabled", "true"); // Deshabilita botones y links fuera del modal
+    }
+  });
+};
+
+// Restaurar interacciones en la página
+const enableInteractions = () => {
+  document.body.style.overflow = "auto";
+  document.querySelectorAll("button, a, input, select").forEach((el) => {
+    el.removeAttribute("disabled"); // Habilita botones y links
+  });
+};
+
+// Función para validar usuario
 const validateUser = async (email) => {
   console.log("📩 Enviando email a backend:", email);
 
   try {
-    const response = await api.post("/auth0/validate-user", { email });
-    console.log("✅ Respuesta del backend:", response.data);
+    const response = await api.get(`/search/email/${email}`);
+    console.log("✅ Resultado de la búsqueda:", response.data);
 
-    // Verificar el rol del usuario y la tabla en la que está registrado
-    if (response.data.role === "client") {
-      console.log("Usuario validado como Cliente");
-      console.log("Datos del usuario:", user.value);  // Muestra los datos del usuario
-      console.log("El usuario está en la tabla 'clients'");
-      router.push("/dashboard-client");
+    if (response.data.idContractor) {
+      console.log("🔧 El usuario es un contratista.");
+      userType.value = "contractor";
+      nitEnterprise.value = response.data.nitEnterprise;
+      showNitModal.value = true;
+      disableInteractions();
 
-    } else if (response.data.role === "contractor") {
-      console.log("Usuario validado como Contratista");
-      console.log("Datos del usuario:", user.value);  // Muestra los datos del usuario
-      console.log("El usuario está en la tabla 'contractors'");
-      router.push("/dashboard-contractor");
-    }
-
-  } catch (error) {
-    if (error.response && error.response.status === 401) {
-      console.error("❌ Error de validación: El usuario no está registrado en el sistema.");
-      alert("El usuario no está registrado en el sistema.");
-      logout({ returnTo: window.location.origin });
+      // Esperar a que el modal se renderice y forzar el focus en el input
+      nextTick(() => nitInput.value?.focus());
+    } else if (response.data.idClient) {
+      console.log("👥 El usuario es un cliente.");
+      userType.value = "client";
     } else {
-      console.error("❌ Error de validación:", error);
+      console.log("⚠️ El usuario no es ni cliente ni contratista.");
     }
-    debugger;  // Para depurar el error si es necesario
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      console.error("❌ Usuario no registrado, cerrando sesión...");
+      
+    } else {
+      console.error("❌ Error al buscar el email:", error);
+    }
   }
 };
 
-// Usamos un watcher para validar el usuario cuando el estado de isAuthenticated cambie
+// Validar el NIT ingresado
+const validateNit = () => {
+  if (enteredNit.value === nitEnterprise.value) {
+    console.log("✅ NIT validado correctamente.");
+    localStorage.setItem("userType", "contractor");
+    showNitModal.value = false;
+    enableInteractions();
+  } else {
+    console.log("❌ NIT incorrecto.");
+    nitError.value = true;
+  }
+};
+
+// Observar cambios en la autenticación
 watch(isLoading, (newValue) => {
   if (!newValue && isAuthenticated.value && user.value?.email) {
+    console.log("✔ Usuario autenticado:", user.value.email);
     validateUser(user.value.email);
   }
 });
+
+// Restaurar interacciones al desmontar el componente
+onUnmounted(() => {
+  enableInteractions();
+});
 </script>
 
-<template>
-  <div>
-    <p>Procesando login...</p>
-  </div>
-</template> -->
-<template>
-    <div>
-      <p>Procesando login...</p>
-    </div>
-  </template>
-  
-  <script setup>
-  import { watch } from 'vue';
-  import { useAuth0 } from '@auth0/auth0-vue';
-  import api from '@/api/axiosInstance';
-  
-  const { isAuthenticated, user, isLoading, logout } = useAuth0();
-  
-  // Función para validar al usuario en el backend
-  const validateUser = async (email) => {
-    console.log("📩 Enviando email a backend:", email);
-  
-    try {
-      const response = await api.get(`/search/email/${email}`);
-      console.log("✅ Resultado de la búsqueda:", response.data);
-  
-      // Verificar si la respuesta contiene idContractor o idClient
-      if (response.data.idContractor) {
-        console.log("🔧 El usuario es un contratista.");
-        localStorage.setItem("userType", "contractor");
-      } else if (response.data.idClient) {
-        console.log("👥 El usuario es un cliente.");
-        localStorage.setItem("userType", "client");
-      } else {
-        console.log("⚠️ El usuario no es ni cliente ni contratista.");
-      }
-  
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        // Si el usuario no se encuentra, cerramos la sesión automáticamente
-        console.error("❌ El usuario no se encuentra en el sistema, cerrando sesión...");
-        logout({ returnTo: window.location.origin }); // Cierra la sesión y redirige a la página principal
-      } else {
-        console.error("❌ Error al buscar el email:", error);
-      }
-    }
-  };
-  
-  // Usar un watcher para validar el usuario cuando el estado de isAuthenticated cambie
-  watch(isLoading, (newValue) => {
-    if (!newValue && isAuthenticated.value && user.value?.email) {
-      console.log("✔ Usuario autenticado con éxito:", user.value.email);
-      validateUser(user.value.email);
-    }
-  });
-  </script>
-  
+<style scoped>
+/* Bloqueo total de interacción */
+.page-blocker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 998;
+  pointer-events: all;
+}
+
+/* Fondo del modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  z-index: 999;
+}
+
+/* Contenido del modal */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+button {
+  padding: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.error-text {
+  color: red;
+  font-size: 14px;
+}
+</style>
