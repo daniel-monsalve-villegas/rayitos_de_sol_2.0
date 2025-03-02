@@ -93,7 +93,7 @@ onMounted(async () => {
 })
 
 const submitForm = async () => {
-  isSubmitting.value = true // Cambia el estado a "Enviando..." y deshabilita el botón
+  isSubmitting.value = true 
 
   const payload = {
     nameClient: formData.value.firstName,
