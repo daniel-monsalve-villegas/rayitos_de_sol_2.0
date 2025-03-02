@@ -75,7 +75,7 @@ const registerAsClient = () => {
 const validateUser = async (email) => {
   console.log("📩 Enviando email a backend:", email);
   userEmail.value = email; // Guardamos el email para el registro
-
+  localStorage.setItem("userEmail", userEmail.value);
   try {
     const response = await api.get(`/search/email/${email}`);
     console.log("✅ Resultado de la búsqueda:", response.data);
@@ -90,6 +90,9 @@ const validateUser = async (email) => {
     } else if (response.data.idClient) {
       console.log("👥 El usuario es un cliente.");
       userType.value = "client";
+      console.log("user", userType)
+      localStorage.setItem("userType", userType.value)
+      router.push("/");
     } else {
       console.log("⚠️ El usuario no está registrado.");
       showRegisterModal.value = true;
@@ -113,6 +116,7 @@ const validateNit = () => {
     localStorage.setItem("userType", "contractor");
     showNitModal.value = false;
     enableInteractions();
+    router.push("/");
   } else {
     console.log("❌ NIT incorrecto.");
     nitError.value = true;

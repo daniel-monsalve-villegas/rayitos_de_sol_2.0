@@ -1,75 +1,130 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { getDepartments } from '@/services/departmentService'
+import api from '@/api/axiosInstance'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const departments = ref([])
+const formData = ref({
+  firstName: '',
+  emailClient: '', // Se obtiene después del login con Auth0
+  cityClient: '',
+  phoneNumber: '',
+  neighborhoodClient: '',
+  installationTypeClient: null,
+  lowIncome: false,
+  singleParent: false,
+  displaced: false,
+  disabled: false,
+  elderly: false,
+  limitedAccessToServices: false,
+  inadequateHousing: false,
+  monthlyConsumptionClient: 0,
+  contractorId: 1,
+})
+
+onMounted(async () => {
+  try {
+    departments.value = await getDepartments()
+    formData.value.emailClient = localStorage.getItem('userEmail') || '' // Cargar email del usuario autenticado
+  } catch (error) {
+    console.error('❌ Error al obtener los departamentos:', error)
+  }
+})
+
+const submitForm = async () => {
+  const payload = {
+    nameClient: formData.value.firstName,
+    emailClient: formData.value.emailClient, // Ahora sí se envía el email
+    cityClient: formData.value.cityClient, // Ahora sí se envía la ciudad
+    department: formData.value.department,
+    phoneClient: formData.value.phoneNumber,
+    neighborhoodClient: formData.value.neighborhoodClient,
+    installationTypeClient: formData.value.installationTypeClient || 'Residencial',
+    monthlyConsumptionClient: formData.value.monthlyConsumptionClient || 0,
+    lowIncome: formData.value.lowIncome || false,
+    singleParent: formData.value.singleParent || false,
+    displaced: formData.value.displaced || false,
+    disabled: formData.value.disabled || false,
+    elderly: formData.value.elderly || false,
+    limitedAccessToServices: formData.value.limitedAccessToServices || false,
+    inadequateHousing: formData.value.inadequateHousing || false,
+    contractorId: 1,
+  }
+
+  console.log('📤 Enviando datos al backend:', payload)
+  try {
+    const response = await api.post('/client', payload)
+    console.log('✅ Cliente registrado con éxito:', response.data)
+    alert('Cliente registrado con éxito')
+    router.push('/')
+  } catch (error) {
+    console.error('❌ Error al registrar cliente:', error.response?.data || error.message)
+    alert('Error al registrar el cliente. Verifica los datos e intenta nuevamente.')
+  }
+}
+</script>
+
 <template>
-<div class="register_client_container">
-  <div class="register_client_principal">
-    <div class="card">
-      <h1>Registro cliente</h1>
-      <form>
-        <div class="form-group">
-          <label for="firstName">Nombre</label>
-          <input type="text" id="firstName" placeholder="Nombre" required>
-        </div>
-        <div class="form-group">
-          <label for="lastName">Apellido</label>
-          <input type="text" id="lastName" placeholder="Apellido" required>
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="Email" required>
-        </div>
-        <div class="form-group">
-          <label for="department">Departamento</label>
-          <select id="department">
-            <option value="" disabled selected>Selecciona departamento</option>
-            <option value="Amazonas">Amazonas</option>
-            <option value="Antioquia">Antioquia</option>
-            <option value="Arauca">Arauca</option>
-            <option value="Atlántico">Atlántico</option>
-            <option value="Bolívar">Bolívar</option>
-            <option value="Boyacá">Boyacá</option>
-            <option value="Caldas">Caldas</option>
-            <option value="Caquetá">Caquetá</option>
-            <option value="Casanare">Casanare</option>
-            <option value="Cauca">Cauca</option>
-            <option value="Cesar">Cesar</option>
-            <option value="Chocó">Chocó</option>
-            <option value="Córdoba">Córdoba</option>
-            <option value="Cundinamarca">Cundinamarca</option>
-            <option value="Guainía">Guainía</option>
-            <option value="Guaviare">Guaviare</option>
-            <option value="Huila">Huila</option>
-            <option value="La Guajira">La Guajira</option>
-            <option value="Magdalena">Magdalena</option>
-            <option value="Meta">Meta</option>
-            <option value="Nariño">Nariño</option>
-            <option value="Norte de Santander">Norte de Santander</option>
-            <option value="Putumayo">Putumayo</option>
-            <option value="Quindío">Quindío</option>
-            <option value="Risaralda">Risaralda</option>
-            <option value="San Andrés y Providencia">San Andrés y Providencia</option>
-            <option value="Santander">Santander</option>
-            <option value="Sucre">Sucre</option>
-            <option value="Tolima">Tolima</option>
-            <option value="Valle del Cauca">Valle del Cauca</option>
-            <option value="Vaupés">Vaupés</option>
-            <option value="Vichada">Vichada</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="phoneNumber">Numero de contacto</label>
-          <input type="tel" id="phoneNumber" placeholder="Contacto" required>
-        </div>
-        <div class="form-footer">
-          <button type="submit" class="btn btn-primary">Send</button>
-        </div>
-      </form>
+  <div class="register_client_container">
+    <div class="register_client_principal">
+      <div class="card">
+        <h1>Registro Cliente</h1>
+        <form @submit.prevent="submitForm">
+          <div class="form-group">
+            <label for="firstName">Nombre</label>
+            <input
+              type="text"
+              id="firstName"
+              v-model="formData.firstName"
+              placeholder="Nombre"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="department">Departamento</label>
+            <select id="department" v-model="formData.cityClient">
+              <option value="" disabled selected>Selecciona un departamento</option>
+              <option v-for="dept in departments" :key="dept.id" :value="dept.name">
+                {{ dept.name }} - {{ dept.solarHoursPerDay }} horas solares
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="phoneNumber">Número de contacto</label>
+            <input
+              type="tel"
+              id="phoneNumber"
+              v-model="formData.phoneNumber"
+              placeholder="Contacto"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="neighborhoodClient">Barrio</label>
+            <input
+              type="text"
+              id="neighborhoodClient"
+              v-model="formData.neighborhoodClient"
+              placeholder="Barrio"
+              required
+            />
+          </div>
+
+          <div class="form-footer">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</div> 
 </template>
 
-
 <style scoped>
-.register_client_container{
+.register_client_container {
   font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
@@ -100,49 +155,58 @@
   padding: 10px 20px;
   margin-bottom: 10px;
   border-radius: 10px;
-  font-weight: bold; 
+  font-weight: bold;
 }
 
 .form-group {
   margin-bottom: 15px;
 }
 label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
-input, select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+input,
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
 .form-footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
 }
 .btn {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 .btn-primary {
-    background-color: var(--color-green);
-    color: white;
-    width: 70%;
+  background-color: var(--color-green);
+  color: white;
+  width: 70%;
 }
 .btn-primary:hover {
-    color: rgb(0, 0, 0);
-    width: 70%;
-    background-color: #339b07;
-    font-weight: bold; 
-}
-.btn-link {
-    background: none;
-    color: #007bff;
-    text-decoration: underline;
+  color: rgb(0, 0, 0);
+  width: 70%;
+  background-color: #339b07;
+  font-weight: bold;
 }
 </style>

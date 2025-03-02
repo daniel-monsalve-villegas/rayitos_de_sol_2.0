@@ -76,6 +76,9 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0, left: 0, behavior: "smooth" }; // Siempre comienza en la parte superior con desplazamiento suave
+  }
 })
 
 

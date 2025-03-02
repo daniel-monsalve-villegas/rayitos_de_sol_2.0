@@ -3,7 +3,7 @@
       <header class="features__content">
         <h2 class="features__title">Energía Solar para un Futuro Sostenible</h2>
         <p class="features__text">Ahorra el dinero y cuida el planeta con nuestros paneles solares de alta eficiencia</p>
-        <button class="features__call-to-action">Obtén una Cotización</button>
+        <router-link to="/calculator" class="features__call-to-action">Obtén una Cotización</router-link>
       </header>
   
       <div class="card-gallery">
