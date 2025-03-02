@@ -65,21 +65,27 @@
   .features__title{
     font-weight: bold;
     font-size: 2rem;
+    
   }
 
   .features__call-to-action{
-    background-color: var(--color-cream);
+    background-color: var(--color-dark-green);
+    color: var(--color-cream);
     border: none;
     font-size: 1rem;
     padding: 0.8rem;
     border-radius: 15px;
     margin-top: 20px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
   }
 
   .features__call-to-action:hover{
-    background-color: var(--color-dark-green);
-    color: var(--color-cream);
+    background-color: var(--color-cream);
+    color: var(--color-dark-green);
   }
+  
   .card-gallery{
     display: flex;
     justify-content: space-between;
