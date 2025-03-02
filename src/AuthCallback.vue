@@ -134,6 +134,37 @@ watch(isLoading, (newValue) => {
 onUnmounted(() => {
   enableInteractions();
 });
+
+const preventReload = (event) => {
+  event.preventDefault();
+  event.returnValue = ""; // Necesario para que funcione en algunos navegadores
+};
+
+onMounted(() => {
+  window.addEventListener("beforeunload", preventReload);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("beforeunload", preventReload);
+});
+const disableReloadKeys = (event) => {
+  if (
+    event.key === "F5" ||
+    (event.ctrlKey && event.key === "r") ||
+    (event.metaKey && event.key === "r")
+  ) {
+    event.preventDefault();
+  }
+};
+
+onMounted(() => {
+  window.addEventListener("keydown", disableReloadKeys);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", disableReloadKeys);
+});
+
 </script>
 
 <style scoped>
