@@ -286,6 +286,26 @@ li{
   border-radius: 20px;
 }
 
+@media (max-width: 509px) {
+  .contractorDashboard__danger-zone h2,
+  .contractorDashboard__danger-zone button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .contractorDashboard__danger-zone h2,
+  .contractorDashboard__danger-zone button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}
+
 
 
 .danger__zone-title{
@@ -410,6 +430,7 @@ li{
   .contactorInfo__Ul {
     padding: 1rem;
   }
+  
 }
 
 @media screen and (max-width: 650px) {

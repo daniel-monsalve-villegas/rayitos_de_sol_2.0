@@ -181,6 +181,8 @@
   .footer-about {
     width: 100%;
   }
+  
+
 }
 
 @media (min-width: 500px) and (max-width: 767px) {
@@ -188,11 +190,17 @@
     width: 80%;
     height: auto;
   }
-  
-  /* En proceso pero por alguna razon no funciona */
-  /* .footer-brand {
-    display: flex;
-    justify-content: center;
-  } */
+
 }
+
+@media (max-width: 535px) {
+
+  .social-links {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;  
+  }
+  
+}
+
 </style>
