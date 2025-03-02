@@ -112,6 +112,7 @@
 
 .hero__text {
   padding-left: 5rem;
+  color: var(--color-cream);
 }
 
 .hero__paragraph-container {
@@ -184,7 +185,7 @@
   }
 
   .hero__title {
-    margin-top: 20%;
+    margin-top: 30%;
   }
 
 
