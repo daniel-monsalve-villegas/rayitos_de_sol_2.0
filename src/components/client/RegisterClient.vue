@@ -73,13 +73,7 @@ const submitForm = async () => {
         <form @submit.prevent="submitForm">
           <div class="form-group">
             <label for="firstName">Nombre</label>
-            <input
-              type="text"
-              id="firstName"
-              v-model="formData.firstName"
-              placeholder="Nombre"
-              required
-            />
+            <input type="text" id="firstName" v-model="formData.firstName" placeholder="Nombre" required />
           </div>
 
           <div class="form-group">
@@ -94,24 +88,27 @@ const submitForm = async () => {
 
           <div class="form-group">
             <label for="phoneNumber">Número de contacto</label>
-            <input
-              type="tel"
-              id="phoneNumber"
-              v-model="formData.phoneNumber"
-              placeholder="Contacto"
-              required
-            />
+            <input type="tel" id="phoneNumber" v-model="formData.phoneNumber" placeholder="Contacto" required />
           </div>
 
           <div class="form-group">
             <label for="neighborhoodClient">Barrio</label>
-            <input
-              type="text"
-              id="neighborhoodClient"
-              v-model="formData.neighborhoodClient"
-              placeholder="Barrio"
-              required
-            />
+            <input type="text" id="neighborhoodClient" v-model="formData.neighborhoodClient" placeholder="Barrio" required />
+          </div>
+
+          <div class="form-group">
+            <label for="monthlyConsumptionClient">Consumo Mensual (kWh)</label>
+            <input type="number" id="monthlyConsumptionClient" v-model.number="formData.monthlyConsumptionClient" required />
+          </div>
+
+          <div class="checkbox-group">
+            <label><input type="checkbox" v-model="formData.lowIncome" /> Bajos ingresos</label>
+            <label><input type="checkbox" v-model="formData.singleParent" /> Madre/padre soltero</label>
+            <label><input type="checkbox" v-model="formData.displaced" /> Desplazado</label>
+            <label><input type="checkbox" v-model="formData.disabled" /> Discapacitado</label>
+            <label><input type="checkbox" v-model="formData.elderly" /> Adulto mayor</label>
+            <label><input type="checkbox" v-model="formData.limitedAccessToServices" /> Acceso limitado a servicios</label>
+            <label><input type="checkbox" v-model="formData.inadequateHousing" /> Vivienda inadecuada</label>
           </div>
 
           <div class="form-footer">
@@ -122,6 +119,7 @@ const submitForm = async () => {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .register_client_container {

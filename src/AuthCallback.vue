@@ -27,13 +27,13 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, watch, onUnmounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import { useAuth0 } from "@auth0/auth0-vue";
 import api from "@/api/axiosInstance";
 
 const router = useRouter();
-const { isAuthenticated, user, isLoading, logout } = useAuth0();
+const { isAuthenticated, user, isLoading} = useAuth0();
 const userType = ref(null);
 const showNitModal = ref(false);
 const showRegisterModal = ref(false);
@@ -45,10 +45,10 @@ const userEmail = ref("");
 
 // Bloquear interacciones en la página
 const disableInteractions = () => {
-  document.body.style.overflow = "hidden"; // Bloquea scroll
+  document.body.style.overflow = "hidden"; 
   document.querySelectorAll("button, a, input, select").forEach((el) => {
     if (!el.closest(".modal-content")) {
-      el.setAttribute("disabled", "true"); // Deshabilita botones y links fuera del modal
+      el.setAttribute("disabled", "true"); 
     }
   });
 };
@@ -57,7 +57,7 @@ const disableInteractions = () => {
 const enableInteractions = () => {
   document.body.style.overflow = "auto";
   document.querySelectorAll("button, a, input, select").forEach((el) => {
-    el.removeAttribute("disabled"); // Habilita botones y links
+    el.removeAttribute("disabled");
   });
 };
 
@@ -73,7 +73,7 @@ const registerAsClient = () => {
 // Función para validar usuario en backend
 const validateUser = async (email) => {
   console.log("📩 Enviando email a backend:", email);
-  userEmail.value = email; // Guardamos el email para el registro
+  userEmail.value = email;
   localStorage.setItem("userEmail", userEmail.value);
   try {
     const response = await api.get(`/search/email/${email}`);
@@ -179,7 +179,6 @@ onUnmounted(() => {
   pointer-events: all;
 }
 
-/* Fondo del modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -193,7 +192,6 @@ onUnmounted(() => {
   z-index: 999;
 }
 
-/* Contenido del modal */
 .modal-content {
   background: white;
   padding: 20px;
