@@ -1,11 +1,11 @@
 <template>
-<div class="contactUs__container"> 
+<div class="contactUs__container">
   <div class="contaUs__containerPosition">
     <div class="cUContainer__left">
       <h2 class="contact__title">Contáctenos</h2>
       <p class="contact__info">Teléfono: +57 123 456 7890</p>
       <p class="contact__info">Correo: contacto@empresa.com</p>
-            
+
       <div class="contact__social">
         <h3 class="contact__social-title">Síguenos en:</h3>
 
@@ -81,7 +81,7 @@
 
             </a>
           </li>
-      
+
           <li>
             <a href="#">
               <svg viewBox="0 0 23.06 18" height="18" width="23.06" xmlns="http://www.w3.org/2000/svg">
@@ -135,7 +135,7 @@
     </div>
   </form>
     </div>
-  </div>  
+  </div>
 </div>
 </template>
 
@@ -165,8 +165,7 @@ const sendContactForm = async () => {
 
     formData.value = { nameContact: "", emailContact: "", messageContact: "" };
   } catch (error) {
-    console.error(error);
-    
+
     modalMessage.value = "Hubo un problema al enviar el mensaje";
     showModal.value = true;
   } finally {
@@ -331,7 +330,7 @@ const sendContactForm = async () => {
 }
 
 .contenedores_redes_contactanos{
-  display: flex; 
+  display: flex;
   justify-content: space-between;
   width: 100%;
   gap: 1.2rem;
@@ -415,7 +414,7 @@ const sendContactForm = async () => {
   .contaUs__containerPosition{
     display: flex;
     flex-direction: column;
-  }  
+  }
   .contact {
     /* display: flex; */
     margin: 2rem 1rem;
@@ -428,20 +427,20 @@ const sendContactForm = async () => {
   .socail-media {
     flex-direction: column; /* Cambia la dirección a vertical */
     align-items: center; /* Centra los botones */
-    gap: 15px; 
+    gap: 15px;
   }
 
   .contenedores_redes_contactanos{
-    display: flex; 
+    display: flex;
     justify-content: space-around; /* Centra los elementos horizontalmente */
-    align-items: center; 
-    gap: 10px; 
+    align-items: center;
+    gap: 10px;
   }
 
   .contaUs__containerPosition {
     margin: 1rem 0;
   }
-  
+
 }
 
 @media (min-width: 690px) and (max-width: 1023px) {
