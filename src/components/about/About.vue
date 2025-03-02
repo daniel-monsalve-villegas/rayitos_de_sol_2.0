@@ -4,12 +4,12 @@
         <img src="../../assets/img/pexels-sdvmovies-29206491.jpg" alt="man working with solar panel" class="image_about_principal">
       </div>
       <div class="aboutUs_container_about item2_container_grip">
-        <p class="aboutUs_paragraph">En RAYITOS DE SOL, nos especializamos en ofrecer soluciones de energía solar en Medellín, brindando paneles solares de alta calidad accesibles para todos, con subsidios personalizados que se ajustan a la situación socioeconómica de cada cliente. Además, apoyamos a contratistas conectándolos con personas y empresas interesadas en instalar sistemas solares, generando una red de oportunidades para su crecimiento. Nuestro compromiso es hacer que la energía solar sea una opción viable, sostenible y económica, ayudando tanto a hogares como a profesionales a contribuir al cuidado del medio ambiente mientras optimizan su consumo energético.</p>
+        <p class="aboutUs_paragraph">Nos especializamos en ofrecer soluciones de energía solar en Medellín, brindando paneles solares de alta calidad accesibles para todos, con subsidios personalizados que se ajustan a la situación socioeconómica de cada cliente. Además, apoyamos a contratistas conectándolos con personas y empresas interesadas en instalar sistemas solares, generando una red de oportunidades para su crecimiento. Nuestro compromiso es hacer que la energía solar sea una opción viable, sostenible y económica, ayudando tanto a hogares como a profesionales a contribuir al cuidado del medio ambiente mientras optimizan su consumo energético.</p>
       </div>
         <!-- <div class="iconsContainer"> -->
         <div class="iconsContainer_icons item3_container_grip">
           <img src="../../assets/img/solar-cell.png" alt="solar cell icon" class="icons_img">
-          <p class="icons_paragraph">En RAYITOS DE SOL puedes encontrar los elementos necesarios para tener tu propio sistema de energía solar, de igual manera  ofrecemos plantas generadoras de electricidad con energía solar y pequeños dispositivos  que usan la energía del sol para convertirla en electricidad aprovechable en el día a día.</p>
+          <p class="icons_paragraph">Puedes encontrar los elementos necesarios para tener tu propio sistema de energía solar, de igual manera  ofrecemos plantas generadoras de electricidad con energía solar y pequeños dispositivos  que usan la energía del sol para convertirla en electricidad aprovechable en el día a día.</p>
         </div>
         <div class="iconsContainer_icons item4_container_grip">
           <img src="../../assets/img/solar-panel.png" alt="solar panel icon" class="icons_img">
