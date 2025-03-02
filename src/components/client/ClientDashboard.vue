@@ -231,7 +231,7 @@ const deleteContractor = async () => {
   width: 80%;
   border-radius: 0.2em;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  margin: 0.7em;
+  margin: 1.4em;
 }
 
 .containerCard__menuHamburger{
@@ -283,6 +283,7 @@ const deleteContractor = async () => {
     background-color: #f4f4f4;
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em;
 }
 
 .containerAvatar__position{
@@ -338,7 +339,7 @@ const deleteContractor = async () => {
   display: block; /* Asegura que ocupe el ancho disponible */
 }
 li{
-  padding: 0.3em;  
+  padding: 0.3em;
 
 }
 

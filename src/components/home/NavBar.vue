@@ -2,7 +2,7 @@
   <nav class="navbar">
     <!-- Logo -->
     <div class="navbar__logo" @click="goHome">
-      <img src="../../assets/img/logo.png" alt="Logo" />
+      <img class="navbarlogo__img" src="../../assets/img/logo.png" alt="Logo" />
     </div>
 
     <!-- Checkbox para el menú hamburguesa -->
@@ -171,7 +171,8 @@ const logoutUser = () => {
 
 .navbar__logo img {
   height: 3.5rem;
-  margin-left: -20px;
+  margin-left: 2em;
+  width: 5em;
 }
 
 .navbar__menu {

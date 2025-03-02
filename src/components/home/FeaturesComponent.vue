@@ -5,7 +5,7 @@
         <p class="features__text">Ahorra el dinero y cuida el planeta con nuestros paneles solares de alta eficiencia</p>
         <router-link to="/calculator" class="features__call-to-action">Obtén una Cotización</router-link>
       </header>
-  
+
       <div class="card-gallery">
         <CardComponent class="card"
           v-for="card in cards"
@@ -17,11 +17,11 @@
       </div>
     </section>
   </template>
-  
+
   <script>
   import { ref } from "vue";
   import CardComponent from "./CardComponent.vue";
-  
+
   export default {
     name: "FeaturesComponent",
     components: {
@@ -39,9 +39,9 @@
     },
   };
   </script>
-  
+
   <style scoped>
-    
+
   .features{
     display: flex;
     flex-direction: column;
@@ -64,7 +64,7 @@
   .features__title{
     font-weight: bold;
     font-size: 2rem;
-    
+
   }
 
   .features__call-to-action{
@@ -84,7 +84,7 @@
     background-color: var(--color-cream);
     color: var(--color-dark-green);
   }
-  
+
   .card-gallery{
     display: flex;
     justify-content: space-between;
@@ -94,13 +94,21 @@
     margin: 20px;
     align-items: stretch;
     max-width: 1000px;
-    
+
   }
 
 .card{
     flex: 1;
     background-color: var(--background-color-primary);
     max-width: 400px;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
 }
 
 @media (max-width: 768px){
@@ -115,7 +123,7 @@
   .card-gallery{
     padding: 1rem 2rem;
   }
-  .features__content{ 
+  .features__content{
     padding: 2rem 3rem;
   }
 }
