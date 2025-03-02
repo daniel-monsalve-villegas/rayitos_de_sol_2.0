@@ -27,147 +27,106 @@
 </template>
 
 <script setup>
-import { ref, watch, onUnmounted, nextTick } from "vue";
-import { useRouter } from "vue-router";
-import { useAuth0 } from "@auth0/auth0-vue";
-import api from "@/api/axiosInstance";
+import { ref, watch, onUnmounted, nextTick } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuth0 } from '@auth0/auth0-vue'
+import api from '@/api/axiosInstance'
 
-const router = useRouter();
-const { isAuthenticated, user, isLoading} = useAuth0();
-const userType = ref(null);
-const showNitModal = ref(false);
-const showRegisterModal = ref(false);
-const enteredNit = ref("");
-const nitEnterprise = ref(null);
-const nitError = ref(false);
-const nitInput = ref(null);
-const userEmail = ref("");
+const router = useRouter()
+const { isAuthenticated, user, isLoading } = useAuth0()
+const userType = ref(null)
+const showNitModal = ref(false)
+const showRegisterModal = ref(false)
+const enteredNit = ref('')
+const nitEnterprise = ref(null)
+const nitError = ref(false)
+const nitInput = ref(null)
+const userEmail = ref('')
 
 // Bloquear interacciones en la página
 const disableInteractions = () => {
-  document.body.style.overflow = "hidden"; 
-  document.querySelectorAll("button, a, input, select").forEach((el) => {
-    if (!el.closest(".modal-content")) {
-      el.setAttribute("disabled", "true"); 
+  document.body.style.overflow = 'hidden'
+  document.querySelectorAll('button, a, input, select').forEach((el) => {
+    if (!el.closest('.modal-content')) {
+      el.setAttribute('disabled', 'true')
     }
-  });
-};
+  })
+}
 
 // Restaurar interacciones en la página
 const enableInteractions = () => {
-  document.body.style.overflow = "auto";
-  document.querySelectorAll("button, a, input, select").forEach((el) => {
-    el.removeAttribute("disabled");
-  });
-};
+  document.body.style.overflow = 'auto'
+  document.querySelectorAll('button, a, input, select').forEach((el) => {
+    el.removeAttribute('disabled')
+  })
+}
 
-// Redirecciones con email prellenado
+// Redirecciones hacia respectivo formulario de registro
 const registerAsContractor = () => {
-  router.push({ path: "/register-contractor", query: { email: userEmail.value } });
-};
+  router.push({ path: '/register-contractor', query: { email: userEmail.value } })
+}
 
 const registerAsClient = () => {
-  router.push({ path: "/register-client", query: { email: userEmail.value } });
-};
+  router.push({ path: '/register-client', query: { email: userEmail.value } })
+}
 
-// Función para validar usuario en backend
+// Validar usuario en backend
 const validateUser = async (email) => {
-  console.log("📩 Enviando email a backend:", email);
-  userEmail.value = email;
-  localStorage.setItem("userEmail", userEmail.value);
+  userEmail.value = email
+  localStorage.setItem('userEmail', userEmail.value)
   try {
-    const response = await api.get(`/search/email/${email}`);
-    console.log("✅ Resultado de la búsqueda:", response.data);
+    const response = await api.get(`/search/email/${email}`)
 
     if (response.data.idContractor) {
-      console.log("🔧 El usuario es un contratista.");
-      userType.value = "contractor";
-      nitEnterprise.value = response.data.nitEnterprise;
-      showNitModal.value = true;
-      disableInteractions();
-      nextTick(() => nitInput.value?.focus());
+      userType.value = 'contractor'
+      nitEnterprise.value = response.data.nitEnterprise
+      showNitModal.value = true
+      disableInteractions()
+      nextTick(() => nitInput.value?.focus())
     } else if (response.data.idClient) {
-      console.log("👥 El usuario es un cliente.");
-      userType.value = "client";
-      console.log("user", userType)
-      localStorage.setItem("userType", userType.value)
-      router.push("/");
+      userType.value = 'client'
+      localStorage.setItem('userType', userType.value)
+      router.push('/')
     } else {
-      console.log("⚠️ El usuario no está registrado.");
-      showRegisterModal.value = true;
-      disableInteractions();
+      showRegisterModal.value = true
+      disableInteractions()
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      console.error("❌ Usuario no registrado, mostrando opciones de registro...");
-      showRegisterModal.value = true;
-      disableInteractions();
+      showRegisterModal.value = true
+      disableInteractions()
     } else {
-      console.error("❌ Error al buscar el email:", error);
+      console.error('')
     }
   }
-};
+}
 
 // Validar el NIT ingresado
 const validateNit = () => {
   if (enteredNit.value === nitEnterprise.value) {
-    console.log("✅ NIT validado correctamente.");
-    localStorage.setItem("userType", "contractor");
-    showNitModal.value = false;
-    enableInteractions();
-    router.push("/");
+    localStorage.setItem('userType', 'contractor')
+    showNitModal.value = false
+    enableInteractions()
+    router.push('/')
   } else {
-    console.log("❌ NIT incorrecto.");
-    nitError.value = true;
+    nitError.value = true
   }
-};
+}
 
 // Observar cambios en la autenticación
 watch(isLoading, (newValue) => {
   if (!newValue && isAuthenticated.value && user.value?.email) {
-    console.log("✔ Usuario autenticado:", user.value.email);
-    validateUser(user.value.email);
+    validateUser(user.value.email)
   }
-});
+})
 
 // Restaurar interacciones al desmontar el componente
 onUnmounted(() => {
-  enableInteractions();
-});
-
-const preventReload = (event) => {
-  event.preventDefault();
-  event.returnValue = ""; // Necesario para que funcione en algunos navegadores
-};
-
-onMounted(() => {
-  window.addEventListener("beforeunload", preventReload);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("beforeunload", preventReload);
-});
-const disableReloadKeys = (event) => {
-  if (
-    event.key === "F5" ||
-    (event.ctrlKey && event.key === "r") ||
-    (event.metaKey && event.key === "r")
-  ) {
-    event.preventDefault();
-  }
-};
-
-onMounted(() => {
-  window.addEventListener("keydown", disableReloadKeys);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("keydown", disableReloadKeys);
-});
+  enableInteractions()
+})
 </script>
 
 <style scoped>
-/* Bloqueo total de interacción */
 .page-blocker {
   position: fixed;
   top: 0;
