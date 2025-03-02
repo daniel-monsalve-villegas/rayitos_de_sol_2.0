@@ -7,23 +7,26 @@
                     <div class="brand-name">
                       <img src="../../assets/img/logo_delgado.png" alt="">
                     </div>
-                    <div class="brand-description">Losdfafasrem ipsum dolor sit amet consectetur adipisicing elit. </div>
+                    <div class="brand-description">"Sostenibilidad y ahorro con cada rayo de sol."</div>
                 </div>
 
                 <!-- About Section -->
                 <div class="footer-about">
                     <h3 class="footer-title">Sobre Nosotros</h3>
                     <p class="footer-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis, voluptatem.
+                      Nos especializamos en soluciones de energía renovable mediante la instalación y venta de paneles solares de alta eficiencia.
                     </p>
                     <p class="footer-text">
-                        Quaerat perferendis reprehenderit voluptatem cum nemo velit rem.
+                      Nuestro objetivo es ayudarte a reducir costos energéticos y contribuir al cuidado del medio ambiente con tecnología sostenible y accesible.
                     </p>
                 </div>
 
                 <!-- Social Media Section -->
                 <div class="footer-social">
-                    <h3 class="footer-title">Síguenos</h3>
+                    <h3 class="footer-title footer-title-twoo">Síguenos</h3>
+                    <p class="footer-text">
+                      Mantente al día con nuestras novedades, ofertas y consejos sobre energía solar a través de nuestras redes sociales.
+                    </p>
                     <div class="social-links">
                       <a href="#" class="social-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -129,6 +132,10 @@
   align-self: start;
 }
 
+.footer-title-twoo {
+  margin-bottom: 0;
+}
+
 .footer-text {
   font-size: 0.875rem;
   color: #ffffff;
@@ -138,7 +145,7 @@
 .footer-social {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
   margin-left: 3rem;
 }
 

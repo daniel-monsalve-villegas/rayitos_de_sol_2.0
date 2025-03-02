@@ -19,7 +19,7 @@
 
 
         <div class="hero__container-right">
-
+          <div class="hero__container-right_two">
           <svg class="hero__calculator-svg" fill="#123524" height="200px" width="200px" version="1.1" id="Layer_1"
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="-33 -33 396.00 396.00" xml:space="preserve" stroke="#4b814f" stroke-width="0.0033"
@@ -41,6 +41,7 @@
               </g>
             </g>
           </svg>
+        </div>
           <h2 class="hero__title-calculator">¡Descubre tu ahorro!</h2>
 
           <p class="hero__text-calculator">Obtén un estimado de costos, ahorro e impacto en el medio ambiente</p>
@@ -95,6 +96,7 @@
   font-size: 3rem;
   margin-top: 30%;
   font-weight: bold;
+  padding-left: 5rem;
 
   @media (max-width: 768px) {
     font-size: 3rem;
@@ -104,6 +106,12 @@
 
 .hero__subtitle {
   font-size: 2.5rem;
+  padding-left: 5rem;
+  width: 90%;
+}
+
+.hero__text {
+  padding-left: 5rem;
 }
 
 .hero__paragraph-container {
@@ -136,6 +144,12 @@
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(4px);
   padding: 10px;
+}
+
+.hero__container-right_two {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .hero__title-calculator {
@@ -191,6 +205,20 @@
   .hero__calculator-svg {
     height: 2.5rem;
   }
+
+  .hero__title {
+  padding-left: 0rem;
+
+}
+
+  .hero__subtitle {
+    padding-left: 0rem;
+    width: 100%;
+}
+
+  .hero__text {
+    padding-left: 0rem;
+  }
 }
 
 @media (max-width: 425px) {
@@ -218,6 +246,7 @@
 
   .hero__calculator-svg {
     height: 2.5rem;
+    width: auto;
   }
 }
 

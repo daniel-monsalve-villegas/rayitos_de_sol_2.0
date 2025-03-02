@@ -145,7 +145,7 @@ const submitForm = () => {
     .calculator_container{
       display: flex;
       justify-content: center;
-      margin-top: 7em;
+      margin-top: 5em;
       background-color: var(--color-cream);
     }
 

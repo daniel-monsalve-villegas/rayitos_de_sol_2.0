@@ -59,6 +59,7 @@ export default {
   justify-content: center;
   align-items: center;
   background-color: var(--color-cream);
+  width: 100%;
 }
 .container-seccion3 {
   max-width: 1120px;
