@@ -94,9 +94,9 @@
       required
       class="modal-input"
     />
-    
+
     <div class="form-actions">
-      <button 
+      <button
         class="btn-delete"
         @click="deleteContractor"
         :disabled="deleteConfirmation !== 'ELIMINAR'"
@@ -117,6 +117,7 @@ import { ref, onMounted } from "vue";
 import api from "@/api/axiosInstance";
 import { getDashBoardContractor } from "@/services/dashboardContractors";
 import { useRouter } from "vue-router";
+import { useAuth0 } from "@auth0/auth0-vue";
 
 const contractor = ref(null);
 const showUpdateModal = ref(false);
@@ -124,6 +125,8 @@ const showDeleteModal = ref(false);
 const deleteConfirmation = ref("");
 const formData = ref({});
 const router = useRouter();
+const { logout } = useAuth0();
+
 
 onMounted(async () => {
   try {
@@ -163,7 +166,7 @@ const deleteContractor = async () => {
     await api.delete(`/contractor/${contractor.value.idContractor}`);
     showDeleteModal.value = false;
     contractor.value = null;
-    router.push("/login");
+    logout({ returnTo: window.location.origin });
   } catch (error) {
     console.error("Error al eliminar contratista:", error);
   }
@@ -292,7 +295,7 @@ li{
   color: var(--color-white);
   font-weight: bold;
   font-size: 1.3rem;
-  margin-bottom: 16px;  
+  margin-bottom: 16px;
 }
 
 .danger__zone-button{
