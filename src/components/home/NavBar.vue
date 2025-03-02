@@ -30,10 +30,10 @@
     <!-- Botón de Login / Menú de usuario -->
     <div class="navbar__auth-buttons">
       <button v-if="!isAuthenticated" @click="login" class="navbar__link--login">Login</button>
-      <div v-else>
-        <button class="navbar__link--login" @click="toggleDropdown">
-          {{ userName }}
-        </button>
+      <div v-else class="navbar__user">
+        <div class="navbar__avatar" @click="toggleDropdown">
+          {{ userName.charAt(0).toUpperCase() }}
+        </div>
         <div v-if="dropdownVisible" class="navbar__dropdown">
           <button @click="goToDashboard">Dashboard</button>
           <button @click="logoutUser">Logout</button>
@@ -100,6 +100,55 @@ const logoutUser = () => {
   box-sizing: border-box;
   border-bottom: 3px solid var(--color-light-green);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar__user {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.navbar__avatar {
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-cream); /* Color de fondo (ajústalo según tu diseño) */
+  color: var(--color-dark-green);
+  font-weight: bold;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Hace que el div sea un círculo */
+  cursor: pointer;
+  user-select: none;
+}
+
+.navbar__dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: var(--color-cream);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  width: 120px;
+
+}
+
+.navbar__dropdown button {
+  background: none;
+  border: none;
+  padding: 10px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.navbar__dropdown button:hover {
+  background: var(--color-dark-green);
+  color: var(--color-cream);
 }
 
 .navbar__logo img {
@@ -178,36 +227,6 @@ const logoutUser = () => {
   width: 30px;
 }
 
-/* Agregar los estilos para el menú desplegable */
-.navbar__dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: var(--color-dark-green);
-  color: var(--color-cream);
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  gap: 10px;
-}
-
-.navbar__dropdown button {
-  background-color: transparent;
-  color: inherit;
-  border: none;
-  padding: 10px;
-  text-align: left;
-  width: 100%;
-  cursor: pointer;
-  font-size: 1em;
-}
-
-.navbar__dropdown button:hover {
-  background-color: var(--color-cream);
-  color: var(--color-dark-green);
-}
 
 @media (max-width: 768px) {
   .navbar {
