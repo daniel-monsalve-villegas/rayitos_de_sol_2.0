@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
+import { useAuth0 } from '@auth0/auth0-vue'
 const routes = [
   {
     path: '/',
@@ -35,31 +35,25 @@ const routes = [
     path: '/register-client',
     name: 'registerClient',
     component: () => import('../components/client/RegisterClient.vue'),
-  },
-  {
-    path: '/login-client',
-    name: 'loginClient',
-    component: () => import('../components/client/LoginClient.vue'),
+    meta: { requiresAuth: true },
   },
   {
     path: '/client-dashboard',
     name: 'clientDashboard',
     component: () => import('../components/client/ClientDashboard.vue'),
+    meta: { requiresAuth: true },
   },
   {
     path: '/register-contractor',
     name: 'registerContractor',
     component: () => import('../components/contractor/RegisterContractor.vue'),
-  },
-  {
-    path: '/login-contractor',
-    name: 'loginContractor',
-    component: () => import('../components/contractor/LoginContractor.vue'),
+    meta: { requiresAuth: true },
   },
   {
     path: '/contractor-dashboard',
     name: 'contractorDashboard',
     component: () => import('../components/contractor/ContractorDashboard.vue'),
+    meta: { requiresAuth: true },
   },
   {
     path: '/Department-List-view',
@@ -70,20 +64,25 @@ const routes = [
     path: '/auth-callback',
     name: 'authCallback',
     component: () => import('../AuthCallback.vue'),
-  }
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    return { top: 0, left: 0, behavior: "smooth" }; // Siempre comienza en la parte superior con desplazamiento suave
-  }
+    return { top: 0, left: 0, behavior: 'smooth' } // Siempre comienza en la parte superior con desplazamiento suave
+  },
 })
 
+router.beforeEach((to, from, next) => {
+  const auth0 = useAuth0()
 
-
-
-console.log('Rutas cargadas:', router.getRoutes())
+  if (to.meta.requiresAuth && !auth0.isAuthenticated.value) {
+    auth0.loginWithRedirect()
+  } else {
+    next()
+  }
+})
 
 export default router
