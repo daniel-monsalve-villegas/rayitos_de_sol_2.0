@@ -18,10 +18,9 @@
     <!-- Modal de registro obligatorio -->
     <div v-if="showRegisterModal" class="modal-overlay">
       <div class="modal-content">
-        <h2>¡No estás registrado!</h2>
-        <p>Por favor, selecciona una opción para registrarte.</p>
-        <button @click="registerAsContractor">Registrar como Contratista</button>
-        <button @click="registerAsClient">Registrar como Cliente</button>
+        <h2>Termina de configurar tu registro</h2>
+        <button @click="registerAsContractor">Soy Contratista</button>
+        <button @click="registerAsClient">Soy Cliente</button>
       </div>
     </div>
   </div>
@@ -185,15 +184,15 @@ button {
   display: block;
   width: 100%;
   padding: 10px;
-  margin: 10px 5px;
-  background: #007bff;
+  margin: 10px 0;
+  background: var(--color-green);
   color: white;
   border: none;
   cursor: pointer;
 }
 
 button:hover {
-  background: #0056b3;
+  background: var(--color-dark-green);
 }
 
 .error-text {
