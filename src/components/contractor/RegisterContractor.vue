@@ -1,3 +1,43 @@
+<template>
+  <div class="register_contractor_container">
+    <div class="register_contractor_principal">
+      <div class="card">
+        <h1>Registro Contratista</h1>
+        <form @submit.prevent="submitForm">
+          <div class="form-group">
+            <label for="nameContractor">Nombre</label>
+            <input type="text" id="nameContractor" v-model="formData.nameContractor" placeholder="Nombre" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phoneContractor">Número de contacto</label>
+            <input type="tel" id="phoneContractor" v-model="formData.phoneContractor" placeholder="Contacto" required>
+          </div>
+
+          <div class="form-group">
+            <label for="locationContractor">Ubicación</label>
+            <input type="text" id="locationContractor" v-model="formData.locationContractor" placeholder="Ciudad, País" required>
+          </div>
+
+          <div class="form-group">
+            <label for="expertiseContractor">Especialización</label>
+            <input type="text" id="expertiseContractor" v-model="formData.expertiseContractor" placeholder="Área de especialización" required>
+          </div>
+
+          <div class="form-group">
+            <label for="nitEnterprise">NIT de la Empresa</label>
+            <input type="text" id="nitEnterprise" v-model="formData.nitEnterprise" placeholder="NIT" required>
+          </div>
+
+          <div class="form-footer">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { ref, onMounted } from "vue";
 import api from "@/api/axiosInstance";
@@ -31,46 +71,6 @@ const submitForm = async () => {
   }
 };
 </script>
-
-<template>
-  <div class="register_contractor_container">
-    <div class="register_contractor_principal">
-      <div class="card">
-        <h1>Registro Contratista</h1>
-        <form @submit.prevent="submitForm">
-          <div class="form-group">
-            <label for="nameContractor">Nombre</label>
-            <input type="text" id="nameContractor" v-model="formData.nameContractor" placeholder="Nombre" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="phoneContractor">Número de contacto</label>
-            <input type="tel" id="phoneContractor" v-model="formData.phoneContractor" placeholder="Contacto" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="locationContractor">Ubicación</label>
-            <input type="text" id="locationContractor" v-model="formData.locationContractor" placeholder="Ciudad, País" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="expertiseContractor">Especialización</label>
-            <input type="text" id="expertiseContractor" v-model="formData.expertiseContractor" placeholder="Área de especialización" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="nitEnterprise">NIT de la Empresa</label>
-            <input type="text" id="nitEnterprise" v-model="formData.nitEnterprise" placeholder="NIT" required>
-          </div>
-          
-          <div class="form-footer">
-            <button type="submit" class="btn btn-primary">Enviar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 .register_contractor_container {
