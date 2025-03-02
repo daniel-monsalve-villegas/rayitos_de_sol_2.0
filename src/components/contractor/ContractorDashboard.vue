@@ -1,21 +1,13 @@
 <template>
   <div class="contractorDasboard__container">
     <div class="cdContainer__card">
-      <div class="containerCard__menuHamburger">
-        <div class="menuHamburger__svg">
-          <img src="../../assets/img/hamburger.svg" alt="Menú">
-        </div>
-        <div class="menuHamburger__exict">
-          <p class="exict__size">💨</p>
-        </div>
-      </div>
 
       <!-- Avatar -->
       <div class="menuHamburger__containerAvatar">
         <div class="containerAvatar__position">
-          <img class="avatar" src="../../assets/img/images.jpeg" alt="Avatar">
+          <img class="avatar" src="../../assets/img/perfil_one.png" alt="Avatar">
         </div>
-      </div>
+      
 
       <!-- Información del contratista -->
       <div class="menuHamburger__contactorInfo" v-if="contractor">
@@ -30,7 +22,6 @@
             <li>Ubicación</li>
           </ul>
         </div>
-
         <div class="contactorInfo__positionRight">
           <ul class="contactorInfo__Ul">
             <li>{{ contractor.idContractor }}</li>
@@ -42,8 +33,8 @@
             <li>{{ contractor.locationContractor }}</li>
           </ul>
         </div>
-
       </div>
+    </div>
       <div class="contractorDashboard__danger-zone">
         <h2 class="danger__zone-title">⚠️ Danger Zone</h2>
         <button class="danger__zone-button" @click="openUpdateModal">Modificar Contratista</button>
@@ -242,15 +233,14 @@ const deleteContractor = async () => {
   justify-content: center;
   align-items: center;
   height: 40vh;
-  width: 100%;
+  width: 50%;
 }
 
 .avatar{
   border: 0.2em solid white;
-  height: 100%;
+  height: 70%;
   width: auto;
   border-radius: 50%;
-  margin-bottom: 2em;
   max-height: 100%;
   max-width: 100%;
 }
@@ -258,8 +248,8 @@ const deleteContractor = async () => {
 /* Información contactor  */
 .menuHamburger__contactorInfo{
   display: flex;
-  height: 100%;
-  width: auto;
+  height: 40vh;
+  width: 100%;
   background-color: var(--color-green);
 }
 
@@ -267,19 +257,19 @@ const deleteContractor = async () => {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 50%;
+  width: 40%;
 }
 
 .contactorInfo__positionRight{
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 70%;
 }
 
 /* listas */
 
 .contactorInfo__Ul{
-  padding: 2em;
+  padding: 1em;
   color: var(--color-cream);
 }
 
@@ -291,6 +281,7 @@ li{
   background-color: red;
   margin: 20px;
   padding: 16px;
+  border-radius: 20px;
 }
 
 .danger__zone-title{
@@ -399,11 +390,19 @@ li{
   cursor: pointer;
   border-radius: 5px;
 }
-@media screen and (max-width: 650px) {
-  .avatar {
-    width: auto;
-    height: 70%;
+@media screen and (max-width: 765px) {
+  .menuHamburger__containerAvatar {
+    display: flex;
+    flex-direction: column;
+    /* background-color: #dc3545; */
   }
+
+  .containerAvatar__position{
+  height: 40vh;
+  width: 100%;
+}
+
+
   .contactorInfo__Ul {
     padding: 1rem;
   }
