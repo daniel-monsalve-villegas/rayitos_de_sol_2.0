@@ -6,13 +6,13 @@
     </div>
 
     <!-- Checkbox para el menú hamburguesa -->
-    <input type="checkbox" id="navbar-toggle-menu" class="navbar__checkbox" />
+    <input type="checkbox" id="navbar-toggle-menu" class="navbar__checkbox" ref="menuCheckbox" />
     <label for="navbar-toggle-menu" class="navbar__label">
       <img src="../../assets/img/hamburger.svg" alt="Menú" class="navbar__hamburger-svg" />
     </label>
 
     <!-- Menú de navegación -->
-    <ul class="navbar__menu">
+    <ul class="navbar__menu" @click="closeMenu">
       <li class="navbar__item">
         <router-link class="navbar__link" to="/about">Rayitos de sol</router-link>
       </li>
@@ -50,10 +50,32 @@ import { useRouter } from 'vue-router'
 
 const { logout, isAuthenticated, user, loginWithRedirect } = useAuth0()
 const router = useRouter()
-const dropdownVisible = ref(false)
 
-const goHome = () => {
-  location.href = '/'
+const dropdownVisible = ref(false)
+const menuCheckbox = ref(null)
+
+// Función para cerrar el menú hamburguesa
+const closeMenu = () => {
+  if (menuCheckbox.value) {
+    menuCheckbox.value.checked = false
+  }
+}
+
+// Función para cerrar el dropdown
+const closeDropdown = () => {
+  dropdownVisible.value = false
+}
+
+// Función para redirigir al dashboard y cerrar dropdown
+const goToDashboard = () => {
+  closeDropdown() // Cierra el dropdown
+
+  const userType = localStorage.getItem('userType')
+  if (userType === 'contractor') {
+    router.push('/contractor-dashboard')
+  } else if (userType === 'client') {
+    router.push('/client-dashboard')
+  }
 }
 
 // Obtener el nombre del usuario desde Auth0
@@ -64,14 +86,9 @@ const toggleDropdown = () => {
   dropdownVisible.value = !dropdownVisible.value
 }
 
-// Función para redirigir al dashboard según el tipo de usuario
-const goToDashboard = () => {
-  const userType = localStorage.getItem('userType')
-  if (userType === 'contractor') {
-    router.push('/contractor-dashboard')
-  } else if (userType === 'client') {
-    router.push('/client-dashboard')
-  }
+// Función para ir al Home
+const goHome = () => {
+  location.href = '/'
 }
 
 // Función para iniciar sesión
@@ -88,6 +105,8 @@ const logoutUser = () => {
   })
 }
 </script>
+
+
 <style scoped>
 .navbar {
   display: flex;
@@ -134,7 +153,6 @@ const logoutUser = () => {
   display: flex;
   flex-direction: column;
   width: 120px;
-
 }
 
 .navbar__dropdown button {
@@ -153,6 +171,7 @@ const logoutUser = () => {
 
 .navbar__logo img {
   height: 3.5rem;
+  margin-left: -20px;
 }
 
 .navbar__menu {
@@ -227,7 +246,6 @@ const logoutUser = () => {
   width: 30px;
 }
 
-
 @media (max-width: 768px) {
   .navbar {
     height: 5em;
@@ -244,9 +262,8 @@ const logoutUser = () => {
 
   /* por terminar */
   .navbar__link--login {
-    position: absolute;
+    position: relative;
     display: block;
-    margin: 0 auto;
     left: 50%;
     transform: translateX(-50%);
     width: 5.5rem;

@@ -35,28 +35,7 @@
         </div>
       </div>
     </div>
-    <div class="container_info_subsidios">
-    <div class="subsidio">
-        <h3>Nivel 1 - Subsidio Básico</h3>
-        <p>✅ <strong>Cobertura:</strong> Hasta el 30% del costo total de los paneles y la instalación.</p>
-        <p>✅ <strong>Requisitos:</strong> Disponible para hogares de estratos 1 y 2 o pequeños negocios con consumo bajo.</p>
-        <p>✅ <strong>Condiciones:</strong> Se debe demostrar la necesidad del subsidio y el impacto positivo en la reducción de costos energéticos.</p>
-    </div>
-
-    <div class="subsidio">
-        <h3>Nivel 2 - Subsidio Intermedio</h3>
-        <p>✅ <strong>Cobertura:</strong> Hasta el 50% del costo total del sistema solar.</p>
-        <p>✅ <strong>Requisitos:</strong> Para viviendas de estratos 3 y 4, medianos comercios o zonas rurales con acceso limitado a la red eléctrica.</p>
-        <p>✅ <strong>Condiciones:</strong> Se debe demostrar el uso eficiente de energía y participar en un programa de educación energética.</p>
-    </div>
-
-    <div class="subsidio">
-        <h3>Nivel 3 - Subsidio Avanzado</h3>
-        <p>✅ <strong>Cobertura:</strong> Hasta el 80% del costo total, incluyendo baterías para almacenamiento.</p>
-        <p>✅ <strong>Requisitos:</strong> Disponible para comunidades rurales sin acceso a la red eléctrica o proyectos de energías renovables de interés público.</p>
-        <p>✅ <strong>Condiciones:</strong> Se debe presentar un proyecto detallado con impacto ambiental positivo y compromiso de mantenimiento a largo plazo.</p>
-    </div>
-</div>
+  
 
       <div class="contractorDashboard__danger-zone">
         <h2 class="danger__zone-title">⚠️ Danger Zone</h2>
@@ -307,22 +286,7 @@ li{
   border-radius: 20px;
 }
 
-.container_info_subsidios {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas pequeñas */
-    padding: 1rem;
-  }
 
-.subsidio {
-    flex: 1;
-    min-width: 300px; /* Evita que los contenedores sean demasiado pequeños */
-    padding: 10px;
-    background-color: #f4f4f4;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-}
 
 .danger__zone-title{
   color: var(--color-white);
