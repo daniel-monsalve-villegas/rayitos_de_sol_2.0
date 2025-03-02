@@ -164,7 +164,6 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("keydown", disableReloadKeys);
 });
-
 </script>
 
 <style scoped>
