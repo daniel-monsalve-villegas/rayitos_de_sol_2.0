@@ -28,7 +28,7 @@
   const iconPath = computed(() => {
     return new URL(`../../assets/img/${props.icon}`, import.meta.url).href;
   });
-  console.log(iconPath.value)
+ 
   </script>
   
   <style scoped>

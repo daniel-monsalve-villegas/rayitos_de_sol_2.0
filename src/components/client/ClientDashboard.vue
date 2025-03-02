@@ -2,7 +2,7 @@
   <div class="contractorDasboard__container">
     <div class="cdContainer__card">
       <div class="containerCard__menuHamburger">
-      
+
       </div>
 
       <!-- Avatar -->
@@ -57,19 +57,19 @@
       <div class="form-grid">
         <label for="nameContractor">Nombre</label>
         <input id="nameContractor" v-model="formData.nameClient" required />
-        
+
         <label for="phoneContractor">Teléfono</label>
         <input id="phoneContractor" v-model="formData.phoneClient" required />
 
         <label for="locationContractor">Ubicación</label>
         <input id="locationContractor" v-model="formData.cityClient" required />
-   
+
         <label for="expertiseContractor">Barrio</label>
         <input id="expertiseContractor" v-model="formData.neighborhoodClient" required />
-   
+
         <label for="nitEnterprise">Consumo mensual</label>
         <input id="nitEnterprise" v-model="formData.monthlyConsumptionClient" required />
-        
+
         <div class="checkbox-group">
             <label><input type="checkbox" v-model="formData.lowIncome" /> Bajos ingresos</label>
             <label><input type="checkbox" v-model="formData.singleParent" /> Madre cabeza de hogar</label>
@@ -102,9 +102,9 @@
       required
       class="modal-input"
     />
-    
+
     <div class="form-actions">
-      <button 
+      <button
         class="btn-delete"
         @click="deleteContractor"
         :disabled="deleteConfirmation !== 'ELIMINAR'"
@@ -141,7 +141,7 @@ onMounted(async () => {
   } catch (error) {
     console.error("Error al obtener datos del cleinte:", error);
   }
-  
+
 });
 
 const openUpdateModal = () => {
@@ -304,7 +304,7 @@ li{
   color: var(--color-white);
   font-weight: bold;
   font-size: 1.3rem;
-  margin-bottom: 16px;  
+  margin-bottom: 16px;
 }
 
 .danger__zone-button{

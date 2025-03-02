@@ -33,7 +33,6 @@
         { id: 2, title: "Ahorro Garantizado", description: "Disminuye tu factura eléctrica desde el primer mes.", icon: "leaf.svg" },
         { id: 3, title: "Fácil Instalación", description: "Instalación rápida y sin complicaciones.", icon: "tick.svg" },
       ]);
-        console.log(cards.value)
       return {
         cards,
       };
