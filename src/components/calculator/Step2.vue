@@ -30,7 +30,7 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
-import http from "@/services/http";
+import api from "@/api/axiosInstance";
 
 
 const props = defineProps({
@@ -60,14 +60,10 @@ watch(
 // Obtener locaciones desde la base de datos al cargar el componente
 const fetchLocations = async () => {
   try {
-    const response = await http.get("http://localhost:8080/api/v1/departments", {
-      headers: {
-        Authorization: props.authHeader
-      }
-    });
+    const response = await api.get('/departments');
     locations.value = response.data;
   } catch (error) {
-    console.error("Error en la solicitud", error);
+    console.error(error);
   }
 };
 

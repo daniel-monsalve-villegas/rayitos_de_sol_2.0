@@ -45,7 +45,7 @@
   </template>
   <script setup>
   import { ref, onMounted } from "vue";
-  import http from "@/services/http";
+  import api from "@/api/axiosInstance";
   
   const props = defineProps({
     formData: {
@@ -62,16 +62,12 @@
   
   const fetchContractor = async () => {
     try {
-      const response = await http.get("http://localhost:8080/api/v1/contractor/1", {
-        headers: {
-          Authorization: props.authHeader
-        }
-      });
+      const response = await api.get('/contractor/1');
   
       contractor.value = response.data;
     
     } catch (error) {
-      console.error("Error al obtener datos del contratista:", error);
+      console.error(error);
     }
   };
   
