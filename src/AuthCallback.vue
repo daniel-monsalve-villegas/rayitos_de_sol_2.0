@@ -27,106 +27,117 @@
 </template>
 
 <script setup>
-import { ref, watch, onUnmounted, nextTick } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuth0 } from '@auth0/auth0-vue'
-import api from '@/api/axiosInstance'
+import { ref, watch, onMounted, onUnmounted, nextTick } from "vue";
+import { useRouter } from "vue-router";
+import { useAuth0 } from "@auth0/auth0-vue";
+import api from "@/api/axiosInstance";
 
-const router = useRouter()
-const { isAuthenticated, user, isLoading } = useAuth0()
-const userType = ref(null)
-const showNitModal = ref(false)
-const showRegisterModal = ref(false)
-const enteredNit = ref('')
-const nitEnterprise = ref(null)
-const nitError = ref(false)
-const nitInput = ref(null)
-const userEmail = ref('')
+const router = useRouter();
+const { isAuthenticated, user, isLoading, logout } = useAuth0();
+const userType = ref(null);
+const showNitModal = ref(false);
+const showRegisterModal = ref(false);
+const enteredNit = ref("");
+const nitEnterprise = ref(null);
+const nitError = ref(false);
+const nitInput = ref(null);
+const userEmail = ref("");
 
 // Bloquear interacciones en la página
 const disableInteractions = () => {
-  document.body.style.overflow = 'hidden'
-  document.querySelectorAll('button, a, input, select').forEach((el) => {
-    if (!el.closest('.modal-content')) {
-      el.setAttribute('disabled', 'true')
+  document.body.style.overflow = "hidden"; // Bloquea scroll
+  document.querySelectorAll("button, a, input, select").forEach((el) => {
+    if (!el.closest(".modal-content")) {
+      el.setAttribute("disabled", "true"); // Deshabilita botones y links fuera del modal
     }
-  })
-}
+  });
+};
 
 // Restaurar interacciones en la página
 const enableInteractions = () => {
-  document.body.style.overflow = 'auto'
-  document.querySelectorAll('button, a, input, select').forEach((el) => {
-    el.removeAttribute('disabled')
-  })
-}
+  document.body.style.overflow = "auto";
+  document.querySelectorAll("button, a, input, select").forEach((el) => {
+    el.removeAttribute("disabled"); // Habilita botones y links
+  });
+};
 
-// Redirecciones hacia respectivo formulario de registro
+// Redirecciones con email prellenado
 const registerAsContractor = () => {
-  router.push({ path: '/register-contractor', query: { email: userEmail.value } })
-}
+  router.push({ path: "/register-contractor", query: { email: userEmail.value } });
+};
 
 const registerAsClient = () => {
-  router.push({ path: '/register-client', query: { email: userEmail.value } })
-}
+  router.push({ path: "/register-client", query: { email: userEmail.value } });
+};
 
-// Validar usuario en backend
+// Función para validar usuario en backend
 const validateUser = async (email) => {
-  userEmail.value = email
-  localStorage.setItem('userEmail', userEmail.value)
+  console.log("📩 Enviando email a backend:", email);
+  userEmail.value = email; // Guardamos el email para el registro
+  localStorage.setItem("userEmail", userEmail.value);
   try {
-    const response = await api.get(`/search/email/${email}`)
+    const response = await api.get(`/search/email/${email}`);
+    console.log("✅ Resultado de la búsqueda:", response.data);
 
     if (response.data.idContractor) {
-      userType.value = 'contractor'
-      nitEnterprise.value = response.data.nitEnterprise
-      showNitModal.value = true
-      disableInteractions()
-      nextTick(() => nitInput.value?.focus())
+      console.log("🔧 El usuario es un contratista.");
+      userType.value = "contractor";
+      nitEnterprise.value = response.data.nitEnterprise;
+      showNitModal.value = true;
+      disableInteractions();
+      nextTick(() => nitInput.value?.focus());
     } else if (response.data.idClient) {
-      userType.value = 'client'
-      localStorage.setItem('userType', userType.value)
-      router.push('/')
+      console.log("👥 El usuario es un cliente.");
+      userType.value = "client";
+      console.log("user", userType)
+      localStorage.setItem("userType", userType.value)
+      router.push("/");
     } else {
-      showRegisterModal.value = true
-      disableInteractions()
+      console.log("⚠️ El usuario no está registrado.");
+      showRegisterModal.value = true;
+      disableInteractions();
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      showRegisterModal.value = true
-      disableInteractions()
+      console.error("❌ Usuario no registrado, mostrando opciones de registro...");
+      showRegisterModal.value = true;
+      disableInteractions();
     } else {
-      console.error('')
+      console.error("❌ Error al buscar el email:", error);
     }
   }
-}
+};
 
 // Validar el NIT ingresado
 const validateNit = () => {
   if (enteredNit.value === nitEnterprise.value) {
-    localStorage.setItem('userType', 'contractor')
-    showNitModal.value = false
-    enableInteractions()
-    router.push('/')
+    console.log("✅ NIT validado correctamente.");
+    localStorage.setItem("userType", "contractor");
+    showNitModal.value = false;
+    enableInteractions();
+    router.push("/");
   } else {
-    nitError.value = true
+    console.log("❌ NIT incorrecto.");
+    nitError.value = true;
   }
-}
+};
 
 // Observar cambios en la autenticación
 watch(isLoading, (newValue) => {
   if (!newValue && isAuthenticated.value && user.value?.email) {
-    validateUser(user.value.email)
+    console.log("✔ Usuario autenticado:", user.value.email);
+    validateUser(user.value.email);
   }
-})
+});
 
 // Restaurar interacciones al desmontar el componente
 onUnmounted(() => {
-  enableInteractions()
-})
+  enableInteractions();
+});
 </script>
 
 <style scoped>
+/* Bloqueo total de interacción */
 .page-blocker {
   position: fixed;
   top: 0;
@@ -138,6 +149,7 @@ onUnmounted(() => {
   pointer-events: all;
 }
 
+/* Fondo del modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -151,6 +163,7 @@ onUnmounted(() => {
   z-index: 999;
 }
 
+/* Contenido del modal */
 .modal-content {
   background: white;
   padding: 20px;
