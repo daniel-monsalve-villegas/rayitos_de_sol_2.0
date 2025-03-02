@@ -46,11 +46,10 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useAuth0 } from '@auth0/auth0-vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 const { logout, isAuthenticated, user, loginWithRedirect } = useAuth0()
 const router = useRouter()
-const route = useRoute()
 const dropdownVisible = ref(false)
 
 const goHome = () => {

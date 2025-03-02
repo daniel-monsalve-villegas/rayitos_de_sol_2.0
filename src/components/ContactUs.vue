@@ -156,7 +156,6 @@ const sendContactForm = async () => {
   if (isSubmitting.value) return;
 
   isSubmitting.value = true;
-  console.log("Enviando datos a la API:", JSON.parse(JSON.stringify(formData.value)));
 
   try {
     await api.post("/contact", { ...formData.value });
@@ -166,7 +165,7 @@ const sendContactForm = async () => {
 
     formData.value = { nameContact: "", emailContact: "", messageContact: "" };
   } catch (error) {
-    console.error("Error al enviar el formulario:", error.response?.data || error.message);
+    console.error(error);
     
     modalMessage.value = "Hubo un problema al enviar el mensaje";
     showModal.value = true;

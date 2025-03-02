@@ -27,13 +27,13 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, watch, onUnmounted, nextTick, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useAuth0 } from "@auth0/auth0-vue";
 import api from "@/api/axiosInstance";
 
 const router = useRouter();
-const { isAuthenticated, user, isLoading, logout } = useAuth0();
+const { isAuthenticated, user, isLoading } = useAuth0();
 const userType = ref(null);
 const showNitModal = ref(false);
 const showRegisterModal = ref(false);
@@ -45,10 +45,10 @@ const userEmail = ref("");
 
 // Bloquear interacciones en la página
 const disableInteractions = () => {
-  document.body.style.overflow = "hidden"; // Bloquea scroll
+  document.body.style.overflow = "hidden"; 
   document.querySelectorAll("button, a, input, select").forEach((el) => {
     if (!el.closest(".modal-content")) {
-      el.setAttribute("disabled", "true"); // Deshabilita botones y links fuera del modal
+      el.setAttribute("disabled", "true"); 
     }
   });
 };
@@ -57,11 +57,11 @@ const disableInteractions = () => {
 const enableInteractions = () => {
   document.body.style.overflow = "auto";
   document.querySelectorAll("button, a, input, select").forEach((el) => {
-    el.removeAttribute("disabled"); // Habilita botones y links
+    el.removeAttribute("disabled"); 
   });
 };
 
-// Redirecciones con email prellenado
+// Redirecciones a formulario de registro de contractor o client
 const registerAsContractor = () => {
   router.push({ path: "/register-contractor", query: { email: userEmail.value } });
 };
@@ -70,40 +70,33 @@ const registerAsClient = () => {
   router.push({ path: "/register-client", query: { email: userEmail.value } });
 };
 
-// Función para validar usuario en backend
+// Validar usuario en backend
 const validateUser = async (email) => {
-  console.log("📩 Enviando email a backend:", email);
-  userEmail.value = email; // Guardamos el email para el registro
+  userEmail.value = email; 
   localStorage.setItem("userEmail", userEmail.value);
   try {
     const response = await api.get(`/search/email/${email}`);
-    console.log("✅ Resultado de la búsqueda:", response.data);
 
     if (response.data.idContractor) {
-      console.log("🔧 El usuario es un contratista.");
       userType.value = "contractor";
       nitEnterprise.value = response.data.nitEnterprise;
       showNitModal.value = true;
       disableInteractions();
       nextTick(() => nitInput.value?.focus());
     } else if (response.data.idClient) {
-      console.log("👥 El usuario es un cliente.");
       userType.value = "client";
-      console.log("user", userType)
       localStorage.setItem("userType", userType.value)
       router.push("/");
     } else {
-      console.log("⚠️ El usuario no está registrado.");
       showRegisterModal.value = true;
       disableInteractions();
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      console.error("❌ Usuario no registrado, mostrando opciones de registro...");
       showRegisterModal.value = true;
       disableInteractions();
     } else {
-      console.error("❌ Error al buscar el email:", error);
+      console.error();
     }
   }
 };
@@ -111,21 +104,43 @@ const validateUser = async (email) => {
 // Validar el NIT ingresado
 const validateNit = () => {
   if (enteredNit.value === nitEnterprise.value) {
-    console.log("✅ NIT validado correctamente.");
     localStorage.setItem("userType", "contractor");
     showNitModal.value = false;
     enableInteractions();
     router.push("/");
   } else {
-    console.log("❌ NIT incorrecto.");
     nitError.value = true;
   }
 };
 
+const preventReload = (event) => {
+  event.preventDefault();
+  event.returnValue = ""; // Necesario para que funcione en algunos navegadores
+};
+onMounted(() => {
+  window.addEventListener("beforeunload", preventReload);
+});
+onUnmounted(() => {
+  window.removeEventListener("beforeunload", preventReload);
+});
+const disableReloadKeys = (event) => {
+  if (
+    event.key === "F5" ||
+    (event.ctrlKey && event.key === "r") ||
+    (event.metaKey && event.key === "r")
+  ) {
+    event.preventDefault();
+  }
+};
+onMounted(() => {
+  window.addEventListener("keydown", disableReloadKeys);
+});
+onUnmounted(() => {
+  window.removeEventListener("keydown", disableReloadKeys);
+});
 // Observar cambios en la autenticación
 watch(isLoading, (newValue) => {
   if (!newValue && isAuthenticated.value && user.value?.email) {
-    console.log("✔ Usuario autenticado:", user.value.email);
     validateUser(user.value.email);
   }
 });
@@ -137,7 +152,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* Bloqueo total de interacción */
+
 .page-blocker {
   position: fixed;
   top: 0;
@@ -149,7 +164,6 @@ onUnmounted(() => {
   pointer-events: all;
 }
 
-/* Fondo del modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -163,7 +177,6 @@ onUnmounted(() => {
   z-index: 999;
 }
 
-/* Contenido del modal */
 .modal-content {
   background: white;
   padding: 20px;

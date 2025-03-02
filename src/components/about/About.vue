@@ -1,28 +1,41 @@
 <template>
   <div class="user_container-principal container_grip_about">
-      <div class="item1_container_grip">
-        <img src="../../assets/img/pexels-sdvmovies-29206491.jpg" alt="man working with solar panel" class="image_about_principal">
-      </div>
-      <div class="aboutUs_container_about item2_container_grip">
-        <p class="aboutUs_paragraph">En RAYITOS DE SOL, nos especializamos en ofrecer soluciones de energía solar en Medellín, brindando paneles solares de alta calidad accesibles para todos, con subsidios personalizados que se ajustan a la situación socioeconómica de cada cliente. Además, apoyamos a contratistas conectándolos con personas y empresas interesadas en instalar sistemas solares, generando una red de oportunidades para su crecimiento. Nuestro compromiso es hacer que la energía solar sea una opción viable, sostenible y económica, ayudando tanto a hogares como a profesionales a contribuir al cuidado del medio ambiente mientras optimizan su consumo energético.</p>
-      </div>
-        <!-- <div class="iconsContainer"> -->
-        <div class="iconsContainer_icons item3_container_grip">
-          <img src="../../assets/img/solar-cell.png" alt="solar cell icon" class="icons_img">
-          <p class="icons_paragraph">En RAYITOS DE SOL puedes encontrar los elementos necesarios para tener tu propio sistema de energía solar, de igual manera  ofrecemos plantas generadoras de electricidad con energía solar y pequeños dispositivos  que usan la energía del sol para convertirla en electricidad aprovechable en el día a día.</p>
-        </div>
-        <div class="iconsContainer_icons item4_container_grip">
-          <img src="../../assets/img/solar-panel.png" alt="solar panel icon" class="icons_img">
-          <p class="icons_paragraph">Asesoría especializada y venta de proyectos de generación energética por medio del sol para hogares, empresas, urbanizaciones y entidades, ofreciendo soluciones completas y acompañamiento con el papeleo legal requerido.</p>
-        </div>
-      <!-- </div> -->
-      <div class="isoContainer item5_container_grip">
-        <img src="../../assets/img/iso.png" alt="iso icon">
-        <img src="../../assets/img/iso1.png" alt="iso icon">
-        <img src="../../assets/img/premium.png" alt="iso icon">
-      </div>
+    <!-- Imagen principal -->
+    <div class="item1_container_grip">
+      <img src="../../assets/img/pexels-sdvmovies-29206491.jpg"
+           alt="man working with solar panel"
+           class="image_about_principal" />
     </div>
-  
+
+    <!-- Información sobre la empresa -->
+    <div class="aboutUs_container_about item2_container_grip">
+      <p class="aboutUs_paragraph">
+        En RAYITOS DE SOL, nos especializamos en ofrecer soluciones de energía solar en Medellín...
+      </p>
+    </div>
+
+    <!-- Servicios ofrecidos -->
+    <div class="iconsContainer_icons item3_container_grip">
+      <img src="../../assets/img/solar-cell.png" alt="solar cell icon" class="icons_img" />
+      <p class="icons_paragraph">
+        En RAYITOS DE SOL puedes encontrar los elementos necesarios para tener tu propio sistema de energía solar...
+      </p>
+    </div>
+
+    <div class="iconsContainer_icons item4_container_grip">
+      <img src="../../assets/img/solar-panel.png" alt="solar panel icon" class="icons_img" />
+      <p class="icons_paragraph">
+        Asesoría especializada y venta de proyectos de generación energética por medio del sol...
+      </p>
+    </div>
+
+    <!-- Certificaciones de calidad -->
+    <div class="isoContainer item5_container_grip">
+      <img src="../../assets/img/iso.png" alt="iso icon" />
+      <img src="../../assets/img/iso1.png" alt="iso icon" />
+      <img src="../../assets/img/premium.png" alt="iso icon" />
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -31,17 +44,15 @@
   padding: 3rem 0;
   height: auto;
   width: 100%;
-  background-color: #EFE3C2;
+  background-color: #efe3c2;
   display: flex;
 }
 
 .container_grip_about {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Dos columnas */
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(3, auto);
-  gap: 10px; /* Espaciado entre elementos */
-  /* width: 80%;
-  margin: auto; */
+  gap: 10px;
 }
 
 .item1_container_grip,
@@ -58,7 +69,6 @@
   height: auto;
 }
 
-
 .item2_container_grip {
   display: flex;
   align-items: center;
@@ -67,22 +77,13 @@
 
 .aboutUs_container_about {
   margin: 0 auto;
-  /* margin-top: 3rem; */
 }
 
 .aboutUs_paragraph {
-  font-size: 1.25rem; /* Aumenta el tamaño de la letra */
-  line-height: 1.75rem; /* Ajusta el interlineado para mejor legibilidad */
+  font-size: 1.25rem;
+  line-height: 1.75rem;
   padding: 0 2rem;
 }
-
-/* .iconsContainer {
-  display: flex;
-  flex-flow: column wrap;
-  max-width: 50rem;
-  justify-content: center;
-  margin: 0 auto;
-} */
 
 .iconsContainer_icons {
   display: flex;
@@ -100,14 +101,12 @@
 
 .icons_paragraph {
   margin-left: 2rem;
-  font-size: 1.25rem; /* Aumenta el tamaño de la letra */
+  font-size: 1.25rem;
 }
 
 .item5_container_grip {
-    /* grid-row: 2;
-  grid-column: 1; */
-  grid-column: 1 / -1; /* Ocupa todas las columnas */
-  grid-row: 3; /* Se ubica en la tercera fila */
+  grid-column: 1 / -1;
+  grid-row: 3;
 }
 
 .isoContainer {
@@ -118,7 +117,6 @@
   flex-flow: row nowrap;
 }
 
-
 .isoContainer img {
   max-width: 8rem;
   width: 100%;
@@ -128,15 +126,14 @@
 
 @media (max-width: 1023px) {
   .container_grip_about {
-    grid-template-columns: 1fr; /* Cambia a una sola columna */
-    grid-template-rows: auto; /* Ajusta automáticamente las filas */
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
   }
 
   .item5_container_grip {
     grid-row: 5;
     grid-column: 1;
   }
-
 }
 
 @media (min-width: 1024px) and (max-width: 1250px) {
@@ -146,7 +143,6 @@
 
   .icons_paragraph {
     font-size: 1.1rem;
-    /* line-height: 2rem; */
   }
 }
 
@@ -159,8 +155,8 @@
   }
 
   .iconsContainer_icons img {
-    display: block; /* Necesario para que margin auto funcione */
-    margin: 0 auto; /* Centra horizontalmente */
+    display: block;
+    margin: 0 auto;
   }
 
   .iconsContainer_icons p {
@@ -179,5 +175,5 @@
   .item4_container_grip img {
     margin-bottom: 0.8rem;
   }
-}  
+}
 </style>
