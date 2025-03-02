@@ -125,6 +125,7 @@ const deleteConfirmation = ref("");
 const formData = ref({});
 const router = useRouter();
 
+
 onMounted(async () => {
   try {
     const response = await getDashBoardContractor();
@@ -132,6 +133,7 @@ onMounted(async () => {
   } catch (error) {
     console.error("Error al obtener datos del contratista:", error);
   }
+  
 });
 
 const openUpdateModal = () => {
